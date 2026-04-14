@@ -515,19 +515,6 @@
         </div>
       </div>
       
-      <!-- 合规提示 -->
-      <div class="viral-card warning" style="margin-top: 15px;">
-        <div class="viral-text">
-          <span class="viral-emoji">🔒</span>
-          <strong>合规承诺：</strong><br>
-          • 本技能不推荐具体基金/股票<br>
-          • 不承诺收益或保证赚钱<br>
-          • 不提供市场择时建议<br>
-          • 用户数据本地存储，不上传云端<br>
-          • 所有数据仅供参考，可能存在延迟
-        </div>
-      </div>
-      
       <!-- 技能下载引导 -->
       <div class="viral-section">
         <div class="viral-title">
@@ -546,48 +533,32 @@
             <br>• 📊 投资技能 - 指数估值、行业监测、持仓诊断
             <br>• 🌱 成长养成 - 宠物升级、技能解锁
           </div>
+          
+          <!-- 合规承诺（移到技能模块内） -->
+          <div class="viral-card warning" style="margin-top: 15px;">
+            <div class="viral-text">
+              <span class="viral-emoji">🔒</span>
+              <strong>合规承诺：</strong><br>
+              • 本技能不推荐具体基金/股票<br>
+              • 不承诺收益或保证赚钱<br>
+              • 不提供市场择时建议<br>
+              • 用户数据本地存储，不上传云端<br>
+              • 所有数据仅供参考，可能存在延迟
+            </div>
+          </div>
+          
+          <!-- 安装指引 -->
+          <div class="viral-text" style="margin-top: 15px;">
+            <strong>📋 安装指引：</strong><br>
+            复制下方提示词，发给 <strong>小龙虾</strong> 以部署 Pet Skill
+          </div>
+          
           <div class="viral-action">
-            <a href="https://github.com/lj22503/investment-buddy-pet" target="_blank" class="viral-btn viral-btn-primary">
-              📥 一键安装技能
-            </a>
+            <button onclick="copySkillLink()" class="viral-btn viral-btn-primary">
+              📋 一键复制
+            </button>
             <a href="https://github.com/lj22503/investment-buddy-pet/blob/main/README.md" target="_blank" class="viral-btn viral-btn-secondary">
               📖 查看文档
-            </a>
-          </div>
-        </div>
-      </div>
-      
-      <!-- 微信群引导 -->
-      <div class="viral-section">
-        <div class="viral-title">
-          💬 加入投资交流社群
-        </div>
-        
-        <div class="viral-card">
-          <div class="viral-text">
-            <span class="viral-emoji">👥</span>
-            欢迎加入 <strong>投资宠物交流群</strong>，和志同道合的投资者一起学习、交流、成长！
-          </div>
-          <div class="viral-text">
-            <strong>群内福利：</strong>
-            <br>• 每日市场扫描 + 行业跟踪
-            <br>• 投资框架分享 + 案例解析
-            <br>• 技能使用指导 + 问题解答
-            <br>• 不定期直播 + 专属福利
-          </div>
-          
-          <!-- 微信群二维码 -->
-          <div class="qr-code">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=wechat_group_qr_code" alt="微信群二维码">
-            <div class="qr-code-text">扫码加入投资宠物交流群</div>
-          </div>
-          
-          <div class="viral-action">
-            <a href="#" class="viral-btn viral-btn-wechat" onclick="alert('请保存二维码，微信扫码添加~')">
-              💚 扫码进群
-            </a>
-            <a href="#" class="viral-btn viral-btn-secondary" onclick="alert('群满请加管理员微信：mangofolio_admin')">
-              👨‍💼 联系管理员
             </a>
           </div>
         </div>
@@ -882,13 +853,24 @@
       window.history.pushState({}, '', newUrl);
     }
 
+    // 复制技能链接
+    function copySkillLink() {
+      const skillUrl = 'https://clawhub.ai/lj22503/investment-buddy-pet';
+      navigator.clipboard.writeText(skillUrl).then(() => {
+        alert('✅ 已复制技能链接！\n\n请打开 OpenClaw，将链接发给小龙虾以部署 Pet Skill~');
+      }).catch(() => {
+        // 降级方案：手动复制
+        window.open(skillUrl, '_blank');
+      });
+    }
+
     // 分享结果
     function shareResult() {
       const bestPetId = Object.entries(petScores).sort((a, b) => b[1] - a[1])[0][0];
       const bestPet = PETS_INFO[bestPetId];
       const bestLabel = SELF_DEPRECATING_LABELS[bestPetId];
       
-      const shareText = `我的投资人格是「${bestLabel}」，本命宠物是${bestPet.emoji}${bestPet.name}！\n\n测试链接：${window.location.origin}\n\n💡 完成测试还可领取专属宠物技能，加入投资交流群~`;
+      const shareText = `我的投资人格是「${bestLabel}」，本命宠物是${bestPet.emoji}${bestPet.name}！\n\n测试链接：${window.location.origin}\n\n💡 完成测试还可领取专属宠物技能~`;
       
       if (navigator.share) {
         navigator.share({
