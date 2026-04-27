@@ -522,6 +522,42 @@
     .hidden {
       display: none;
     }
+    
+    .profile-card {
+      background: linear-gradient(135deg, #FFFDF5, #F8F0E0);
+      border-radius: 16px;
+      padding: 25px;
+      margin: 15px 0;
+      border: 2px solid #E8D5B5;
+    }
+    
+    .migration-cost {
+      background: linear-gradient(135deg, #FFF8F0, #F5E6D3);
+      padding: 25px;
+      border-radius: 12px;
+      border-left: 5px solid #B8860B;
+      margin: 20px 0;
+    }
+    
+    .migration-cost h3 {
+      color: #5C4033;
+      margin-bottom: 10px;
+    }
+    
+    .migration-cost p {
+      margin: 8px 0;
+      color: #5C4033;
+    }
+    
+    .migration-cost ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+    
+    .migration-cost li {
+      margin: 5px 0;
+      color: #5C4033;
+    }
   </style>
 </head>
 <body>
@@ -570,6 +606,8 @@
       <div style="margin-top: 30px;">
         <button class="btn btn-primary" onclick="shareResult()">分享我的结果</button>
         <button class="btn btn-secondary" onclick="retakeTest()" style="margin-top: 10px;">再测一次</button>
+        <button class="btn btn-secondary" onclick="showUserProfile()" style="margin-top: 10px;">👤 查看我的档案</button>
+        <button class="btn btn-secondary" onclick="showEvolutionReport()" style="margin-top: 10px;">📊 查看进化报告</button>
       </div>
       
       <!-- 投资者教育说明 -->
@@ -664,6 +702,28 @@
         <div class="funny-footer-text" style="font-size: 11px; color: #8B7355; margin-top: 10px;">
           投资者教育 · 金融合规 · 数据本地存储
         </div>
+      </div>
+    </div>
+    
+    <!-- 用户档案页面 -->
+    <div id="profile-page" class="card hidden">
+      <h2 style="text-align: center; color: #5C4033; margin-bottom: 20px;">👤 我的投资档案</h2>
+      <div id="profile-content">
+        <!-- 动态生成 -->
+      </div>
+      <div style="text-align: center; margin-top: 20px;">
+        <button class="btn btn-primary" onclick="goBack()">返回测试</button>
+      </div>
+    </div>
+    
+    <!-- 进化报告页面 -->
+    <div id="evolution-page" class="card hidden">
+      <h2 style="text-align: center; color: #5C4033; margin-bottom: 20px;">📊 我的进化报告</h2>
+      <div id="evolution-content">
+        <!-- 动态生成 -->
+      </div>
+      <div style="text-align: center; margin-top: 20px;">
+        <button class="btn btn-primary" onclick="goBack()">返回测试</button>
       </div>
     </div>
     
@@ -922,6 +982,9 @@
       const newUrl = new URL(window.location);
       newUrl.searchParams.set('result', bestPetId);
       window.history.pushState({}, '', newUrl);
+      
+      // 保存测试结果到 localStorage
+      saveTestResult(bestPetId, petScores);
     }
 
     // 复制技能链接
@@ -974,7 +1037,203 @@
       }
     }
 
-    // 启动
+    // ==================== 用户档案功能 ====================
+    
+    // 用户档案结构
+    let userProfile = {
+      userId: 'user_' + Date.now(),
+      createdAt: new Date().toISOString(),
+      testResults: [],
+      preferences: {
+        riskTolerance: '待设置',
+        investmentHorizon: '待设置',
+        knowledgeLevel: '待设置',
+        decisionStyle: '待设置'
+      },
+      evolutionData: {
+        testCount: 0,
+        styleChanges: [],
+        evolutionScore: 0
+      }
+    };
+
+    // 根据宠物 ID 确定投资风格
+    function determineStyle(petId) {
+      const styleMap = {
+        'songguo': '保守/左侧',
+        'wugui': '保守/左侧',
+        'maotouying': '平衡/右侧',
+        'lang': '激进/右侧',
+        'daxiang': '平衡/左侧',
+        'ying': '激进/右侧',
+        'huli': '平衡/右侧',
+        'haitun': '保守/右侧',
+        'shizi': '激进/右侧',
+        'mayi': '保守/左侧',
+        'luotuo': '激进/左侧',
+        'dunjiaoshou': '激进/右侧',
+        'junma': '激进/右侧'
+      };
+      return styleMap[petId] || '待确定';
+    }
+
+    // 保存测试结果
+    function saveTestResult(petId, scores) {
+      const result = {
+        petId: petId,
+        scores: scores,
+        date: new Date().toISOString(),
+        preferences: {...userProfile.preferences}
+      };
+      userProfile.testResults.push(result);
+      userProfile.evolutionData.testCount++;
+      
+      // 检测风格变化
+      if (userProfile.testResults.length > 1) {
+        const prevStyle = determineStyle(userProfile.testResults[userProfile.testResults.length - 2].petId);
+        const currStyle = determineStyle(petId);
+        if (prevStyle !== currStyle) {
+          userProfile.evolutionData.styleChanges.push({
+            from: prevStyle,
+            to: currStyle,
+            date: new Date().toISOString()
+          });
+        }
+      }
+      
+      // 计算进化分数
+      userProfile.evolutionData.evolutionScore = Math.min(100, 
+        userProfile.evolutionData.testCount * 10 + 
+        userProfile.evolutionData.styleChanges.length * 5
+      );
+      
+      localStorage.setItem('mangofolio-user-profile', JSON.stringify(userProfile));
+    }
+
+    // 加载用户档案
+    function loadUserProfile() {
+      const saved = localStorage.getItem('mangofolio-user-profile');
+      if (saved) {
+        userProfile = JSON.parse(saved);
+      }
+      return userProfile;
+    }
+
+    // 显示用户档案
+    function showUserProfile() {
+      loadUserProfile();
+      const content = document.getElementById('profile-content');
+      const latestResult = userProfile.testResults.length > 0 ? 
+        userProfile.testResults[userProfile.testResults.length - 1] : null;
+      
+      content.innerHTML = `
+        <div class="profile-card">
+          <h3 style="color: #5C4033; margin-bottom: 10px;">📊 测试记录</h3>
+          <p>测试次数：${userProfile.evolutionData.testCount}</p>
+          <p>注册时间：${new Date(userProfile.createdAt).toLocaleDateString('zh-CN')}</p>
+          <p>进化分数：${userProfile.evolutionData.evolutionScore}/100</p>
+        </div>
+        
+        <div class="profile-card">
+          <h3 style="color: #5C4033; margin-bottom: 10px;">🎯 投资偏好</h3>
+          <p>风险承受力：${userProfile.preferences.riskTolerance}</p>
+          <p>投资期限：${userProfile.preferences.investmentHorizon}</p>
+          <p>知识水平：${userProfile.preferences.knowledgeLevel}</p>
+          <p>决策风格：${userProfile.preferences.decisionStyle}</p>
+        </div>
+        
+        ${latestResult ? `
+        <div class="profile-card">
+          <h3 style="color: #5C4033; margin-bottom: 10px;">🐾 最近测试结果</h3>
+          <p>本命宠物：${PETS_INFO[latestResult.petId].emoji} ${PETS_INFO[latestResult.petId].name}</p>
+          <p>投资风格：${determineStyle(latestResult.petId)}</p>
+          <p>测试时间：${new Date(latestResult.date).toLocaleDateString('zh-CN')}</p>
+        </div>
+        ` : '<p style="text-align: center; color: #8B7355;">暂无测试结果，先完成一次测试吧！</p>'}
+      `;
+      
+      document.getElementById('quiz-page').classList.add('hidden');
+      document.getElementById('result-page').classList.add('hidden');
+      document.getElementById('profile-page').classList.remove('hidden');
+    }
+
+    // 显示进化报告
+    function showEvolutionReport() {
+      loadUserProfile();
+      const results = userProfile.testResults;
+      const content = document.getElementById('evolution-content');
+      
+      if (results.length < 2) {
+        content.innerHTML = `
+          <div class="profile-card">
+            <h3 style="color: #5C4033; margin-bottom: 10px;">📊 进化报告</h3>
+            <p>当前测试次数：${results.length}</p>
+            <p style="color: #8B7355;">请至少测试 2 次后再生成进化报告</p>
+            <p style="color: #8B7355;">每次测试都是你投资大脑的一次进化</p>
+          </div>
+        `;
+      } else {
+        const latest = results[results.length - 1];
+        const previous = results[results.length - 2];
+        const styleChange = {
+          previous: determineStyle(previous.petId),
+          current: determineStyle(latest.petId),
+          changed: determineStyle(previous.petId) !== determineStyle(latest.petId)
+        };
+        
+        const growthLevel = userProfile.evolutionData.testCount >= 10 ? 'L3 自进化' : 
+                            userProfile.evolutionData.testCount >= 5 ? 'L2 个性化' : 'L1 标准化';
+        
+        content.innerHTML = `
+          <div class="profile-card">
+            <h3 style="color: #5C4033; margin-bottom: 10px;">📈 投资风格变化</h3>
+            <p>上次风格：${styleChange.previous}</p>
+            <p>本次风格：${styleChange.current}</p>
+            <p>变化状态：${styleChange.changed ? '🔄 已变化' : '✅ 稳定'}</p>
+          </div>
+          
+          <div class="profile-card">
+            <h3 style="color: #5C4033; margin-bottom: 10px;">📜 历史决策对比</h3>
+            ${results.map((r, i) => `
+              <p>${new Date(r.date).toLocaleDateString('zh-CN')} - ${PETS_INFO[r.petId].emoji} ${PETS_INFO[r.petId].name} (${determineStyle(r.petId)})</p>
+            `).join('')}
+          </div>
+          
+          <div class="profile-card">
+            <h3 style="color: #5C4033; margin-bottom: 10px;">🌱 能力成长轨迹</h3>
+            <p>当前等级：${growthLevel}</p>
+            <p>测试次数：${userProfile.evolutionData.testCount}</p>
+            <p>风格变化：${userProfile.evolutionData.styleChanges.length} 次</p>
+            <p>进化分数：${userProfile.evolutionData.evolutionScore}/100</p>
+          </div>
+          
+          <div class="migration-cost">
+            <h3 style="color: #5C4033; margin-bottom: 10px;">⚠️ 迁移成本</h3>
+            <p>你的投资大脑已成型，包含：</p>
+            <ul>
+              <li>${userProfile.evolutionData.testCount} 次交互数据</li>
+              <li>${userProfile.evolutionData.styleChanges.length} 次风格变化</li>
+              <li>${userProfile.evolutionData.evolutionScore} 进化分数</li>
+            </ul>
+            <p><strong>离开等于放弃这些进化成果。</strong></p>
+          </div>
+        `;
+      }
+      
+      document.getElementById('quiz-page').classList.add('hidden');
+      document.getElementById('result-page').classList.add('hidden');
+      document.getElementById('evolution-page').classList.remove('hidden');
+    }
+
+    // 返回测试
+    function goBack() {
+      document.getElementById('profile-page').classList.add('hidden');
+      document.getElementById('evolution-page').classList.add('hidden');
+      document.getElementById('quiz-page').classList.remove('hidden');
+    }
+
+    // ==================== 启动 ====================
+    loadUserProfile();
     init();
     checkUrlResult();
   </script>
