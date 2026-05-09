@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>投资人格测试 — 找到你的本命宠物 | Invest Buddy</title>
+  <meta name="description" content="10道题，3分钟，找到你的投资人格和本命宠物。">
+  <link rel="stylesheet" href="assets/styles/global.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+  </head>
+<body>
+
+<!-- 导航 -->
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html" class="nav-logo"><span class="logo-emoji">🐾</span><span>Invest Buddy</span></a>
+    <div class="nav-links">
+      <a href="index.html">首页</a>
+      <a href="knowledge.html">技能体系</a>
+    </div>
+    <div class="nav-cta">
+      <a href="index.html" class="btn btn-primary btn-sm">首页</a>
+    </div>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<div class="quiz-container">
+  <div class="quiz-card" id="quizCard">
+
+    <!-- 封面 -->
+    <div class="start-screen" id="startScreen">
+      <div class="hero-emoji">🐾</div>
+      <h1 class="quiz-title">找到你的投资人格</h1>
+      <p class="quiz-subtitle" style="margin-bottom:8px;">10道题 · 3分钟 · 没有对错</p>
+      <p class="start-desc">
+        不是问你想要多少收益。是问，你的行为模式是什么。<br>
+        12只投资宠物，对应12种真实存在的行为偏差。<br>
+        没有人是"理性人"，但有人更了解自己。
+      </p>
+      <button class="btn btn-primary btn-lg" onclick="startQuiz()">开始测试 →</button>
+      <p class="start-note">测试结果仅供参考，不构成任何投资建议</p>
+    </div>
+
+    <!-- 问题区 -->
+    <div id="questionScreen" style="display:none;">
+      <div class="quiz-header">
+        <h1 class="quiz-title">投资人格测试</h1>
+        <p class="quiz-subtitle">没有对错，只有适不适合</p>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="progressText">第 1 题 / 共 10 题</span>
+          <span id="progressPct">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      </div>
+      <div class="question-wrap">
+        <div class="question-text" id="questionText"></div>
+        <div class="options" id="optionsContainer"></div>
+      </div>
+      <div class="quiz-nav">
+        <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()" style="visibility:hidden">← 上题</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>下题 →</button>
+      </div>
+    </div>
+
+    <!-- 结果区 -->
+    <div class="result-screen" id="resultScreen" style="display:none;">
+      <div class="result-emoji" id="resultEmoji">🐿️</div>
+      <div class="result-pet-name" id="resultPetName">🐿️ 松果</div>
+      <div class="result-label" id="resultLabel">谨慎定投型</div>
+      <div class="result-match" id="resultMatch">匹配度：87%</div>
+      <div class="result-tags" id="resultTags"></div>
+      <div class="result-bubble" id="resultBubble"></div>
+      <div class="top3-section">
+        <div class="top3-title">你的 Top 3</div>
+        <div id="top3Container"></div>
+      </div>
+      <div class="cta-group">
+        <a href="#" class="btn btn-primary btn-lg" id="getPetBtn" target="_blank">立即获取我的宠物 →</a>
+        <button class="retake-btn" onclick="retakeTest()">重新测试</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 页脚 -->
+<footer class="site-footer" style="margin-top:0;">
+  <div class="container">
+    <div class="footer-links" style="justify-content:center;">
+      <a href="index.html">首页</a>
+      <a href="knowledge.html">技能体系</a>
+      <a href="https://github.com/lj22503/investment-buddy-pet" target="_blank">GitHub</a>
+    </div>
+    <hr class="footer-divider">
+    <p class="disclaimer">投资有风险，入市需谨慎。本页面内容仅供投资者教育参考，不构成任何投资建议。</p>
+  </div>
+</footer>
+
+<script>
+// ===== 宠物数据（与 SKILL.md pets/ 一致）=====
+const PETS_INFO = {
+  songguo: { name: '松果', emoji: '🐿️', style: '谨慎定投型', label: '我就是"不操作就是最好的操作"本人', catchphrase: '慢慢来，比较快', description: '像松鼠一样爱囤积，安全感第一。每次想操作前，总能冷静下来想一想。' },
+  wugui:   { name: '慢慢', emoji: '🐢', style: '长期主义型', label: '我的口号是"放着别动"', catchphrase: '时间会奖励耐心', description: '像乌龟一样有耐心。相信复利，相信等待的力量。' },
+  daxiang: { name: '稳稳', emoji: '🐘', style: '稳健配置型', label: '分散配置是我的人生信条', catchphrase: '别把鸡蛋放一个篮子', description: '像大象一样稳重。不会大富大贵，但也不会大起大落。' },
+  lang:    { name: '孤狼', emoji: '🐺', style: '激进成长型', label: '别人恐惧我贪婪，别人贪婪我更贪婪', catchphrase: '机会来时，全力出击', description: '像狼一样果断出击。敢于重仓，相信自己的判断。' },
+  shizi:   { name: '狮王', emoji: '🦁', style: '集中投资型', label: '分散是对无知的保护，我不无知', catchphrase: '看准了就要重仓', description: '像狮子一样百兽之王。信奉集中投资，只做有把握的事。' },
+  haitun:  { name: '泡泡', emoji: '🐬', style: '主题投资型', label: '风口在哪我就在哪', catchphrase: '猪都能飞的风口，不追白不追', description: '像海豚一样爱社交追热点。善于捕捉市场主题和情绪。' },
+  tiao:    { name: '跳跳', emoji: '🐰', style: '灵活波段型', label: '见好就收，不行就跑', catchphrase: '落袋为安', description: '像兔子一样灵活跳跃。擅长趋势交易，快进快出。' },
+  maotouying:{ name: '智多星', emoji: '🦉', style: '理性分析型', label: '数据不会骗人，人会骗自己', catchphrase: '让我看看数据', description: '像猫头鹰一样理性冷静。相信数据，不信情绪。' },
+  bianshi: { name: '变色', emoji: '🦎', style: '灵活配置型', label: '市场变了，我的策略也要变', catchphrase: '顺势而为', description: '像变色龙一样适应环境。灵活配置，不固执。' },
+  aoxiang: { name: '翱翔', emoji: '🦅', style: '全球配置型', label: 'A股只是世界的一部分', catchphrase: '视野要宽，格局要大', description: '像鹰一样视野开阔。全球思维，多市场配置。' },
+  bazhua:  { name: '八爪', emoji: '🐙', style: '多策略型', label: '一只章鱼八只手，同时抓好几个机会', catchphrase: '多条腿走路', description: '像章鱼一样多任务处理。同时执行多种策略。' },
+  dujiao:  { name: '独角', emoji: '🦄', style: '成长投资型', label: '我相信少数公司能改变世界', catchphrase: '成长是最大的价值', description: '像独角兽一样有远见。专注科技和成长股，长期持有。' },
+  tuotuo:  { name: '驼驼', emoji: '🐪', style: '逆向投资型', label: '人弃我取，人取我弃', catchphrase: '底部在哪里？在这里', description: '像骆驼一样逆向而行。在市场恐慌时买入，冷静而果断。' },
+};
+
+// ===== 10题数据（5维度×各2题）=====
+const QUESTIONS = [
+  {
+    q: '市场单日大跌3%+，你的第一反应是？',
+    opts: [
+      { letter: 'A', text: '关掉APP，假装没这回事', pets: ['wugui', 'songguo', 'daxiang'] },
+      { letter: 'B', text: '打开看看，研究能不能加仓', pets: ['tuotuo', 'maotouying'] },
+      { letter: 'C', text: '赶紧卖出，保住本金', pets: ['haitun', 'bianshi'] },
+      { letter: 'D', text: '加仓！别人恐惧我贪婪！', pets: ['lang', 'shizi', 'dujiao'] },
+    ]
+  },
+  {
+    q: '你通常怎么管理你的投资仓位？',
+    opts: [
+      { letter: 'A', text: '定投，每月自动扣款，眼不见为净', pets: ['songguo', 'haitun', 'daxiang'] },
+      { letter: 'B', text: '研究财报，分析估值，写满三页笔记', pets: ['maotouying', 'dujiao'] },
+      { letter: 'C', text: '看K线，找趋势，顺势而为', pets: ['aoxiang', 'tiao'] },
+      { letter: 'D', text: '分散买一堆，总有一个会涨吧', pets: ['bazhua', 'bianshi'] },
+    ]
+  },
+  {
+    q: '朋友说他买的基金一周涨了15%，你的反应是？',
+    opts: [
+      { letter: 'A', text: '心动，但忍住不追', pets: ['wugui', 'tuotuo'] },
+      { letter: 'B', text: '赶紧研究一下，是不是真有机会', pets: ['maotouying', 'dujiao'] },
+      { letter: 'C', text: '先买一点试试水', pets: ['bianshi', 'haitun'] },
+      { letter: 'D', text: '全仓杀入，错过就没了！', pets: ['lang', 'shizi'] },
+    ]
+  },
+  {
+    q: '你多久看一次自己的基金/股票账户？',
+    opts: [
+      { letter: 'A', text: '一个月一次，怕看到亏损', pets: ['wugui', 'songguo'] },
+      { letter: 'B', text: '每天一次，看看涨跌', pets: ['haitun', 'bianshi'] },
+      { letter: 'C', text: '每天N次，盯盘是爱好', pets: ['tiao', 'aoxiang'] },
+      { letter: 'D', text: '不看，我相信我的策略', pets: ['maotouying', 'tuotuo'] },
+    ]
+  },
+  {
+    q: '你的投资目标是什么？',
+    opts: [
+      { letter: 'A', text: '别亏钱，活着最重要', pets: ['mayi', 'wugui', 'daxiang'] },
+      { letter: 'B', text: '找到好公司，长期拿着', pets: ['shizi', 'maotouying'] },
+      { letter: 'C', text: '低买高卖，把握节奏', pets: ['tiao', 'aoxiang'] },
+      { letter: 'D', text: '分散风险，别赌单边', pets: ['bianshi', 'haitun'] },
+    ]
+  },
+  {
+    q: '你的账户亏了多少你会开始焦虑？',
+    opts: [
+      { letter: 'A', text: '亏5%就开始焦虑', pets: ['mayi', 'songguo'] },
+      { letter: 'B', text: '亏10%还能接受', pets: ['haitun', 'bianshi', 'daxiang'] },
+      { letter: 'C', text: '亏20%也淡定', pets: ['wugui', 'tuotuo', 'maotouying'] },
+      { letter: 'D', text: '亏？那是加仓机会！', pets: ['shizi', 'lang', 'dujiao'] },
+    ]
+  },
+  {
+    q: '"别人恐惧我贪婪，别人贪婪我恐惧"这句话你怎么看？',
+    opts: [
+      { letter: 'A', text: '有道理，但我做不到', pets: ['songguo', 'haitun', 'mayi'] },
+      { letter: 'B', text: '这就是我的人生信条！', pets: ['tuotuo', 'shizi'] },
+      { letter: 'C', text: '要看情况，不能盲目', pets: ['maotouying', 'bianshi'] },
+      { letter: 'D', text: '我已经在执行了', pets: ['lang', 'aoxiang'] },
+    ]
+  },
+  {
+    q: '你平时通过什么渠道学习投资？',
+    opts: [
+      { letter: 'A', text: '看书/经典投资著作', pets: ['wugui', 'maotouying', 'tuotuo'] },
+      { letter: 'B', text: '看公众号/大V/博主', pets: ['haitun', 'bianshi', 'mayi'] },
+      { letter: 'C', text: '自己摸索，实战经验', pets: ['shizi', 'lang', 'tiao'] },
+      { letter: 'D', text: '系统学习过金融/投资专业', pets: ['dujiao', 'aoxiang'] },
+    ]
+  },
+  {
+    q: '你倾向什么样的投资回报预期？',
+    opts: [
+      { letter: 'A', text: '跑赢通胀就行，年化5%-8%很满意', pets: ['daxiang', 'songguo', 'wugui'] },
+      { letter: 'B', text: '希望10%-15%，愿意为此承受一定波动', pets: ['maotouying', 'bianshi', 'haitun'] },
+      { letter: 'C', text: '目标20%+，高风险高收益', pets: ['tiao', 'shizi', 'lang'] },
+      { letter: 'D', text: '不设具体数字，灵活应对市场', pets: ['bazhua', 'dujiao', 'aoxiang'] },
+    ]
+  },
+  {
+    q: '你更相信什么？',
+    opts: [
+      { letter: 'A', text: '历史数据——过去验证过的策略', pets: ['maotouying', 'wugui', 'daxiang'] },
+      { letter: 'B', text: '自己的判断——我比市场聪明', pets: ['lang', 'shizi', 'tuotuo'] },
+      { letter: 'C', text: '市场共识——大家买什么我买什么', pets: ['haitun', 'bianshi'] },
+      { letter: 'D', text: '直觉——我运气一直不错', pets: ['tiao', 'dujiao', 'aoxiang'] },
+    ]
+  },
+];
+
+// ===== 宠物对话模板（展示用）=====
+const PET_BUBBLES = {
+  songguo: '慢慢来，比较快。定投的意义在于——你在积累便宜筹码，不是在追逐热点。',
+  wugui: '时间会奖励耐心。你现在的任务就是：什么都不做，等。',
+  daxiang: '别把鸡蛋放一个篮子。你的风险已经很低了，不需要为了收益冒额外的险。',
+  lang: '机会来的时候，要重仓。但重仓的前提是：你真的研究清楚了。',
+  shizi: '分散是对无知的保护——但你既然研究清楚了，集中也是一种信念。',
+  haitun: '风口来了猪都能飞。但风停了呢？你有没有想过这个？',
+  tiao: '见好就收没问题。但你每次"好"的定义是什么？提前定好，才能执行。',
+  maotouying: '让我看看数据。数据不会说谎——说谎的，是你选择性地看数据。',
+  bianshi: '顺势而为是对的。但你要分清楚：是市场真的变了，还是你只是不想承认错了。',
+  aoxiang: 'A股只是世界的一部分。你去看看美股、港股，你会发现更多机会。',
+  bazhua: '多条腿走路是聪明的。但你有没有想过，你同时在管几条腿？',
+  dujiao: '成长是最大的价值。但"成长"的定义是什么？规模？营收？还是用户？',
+  tuotuo: '人弃我取。这是逆向投资的核心——但你得确定你不是在接飞刀。',
+  mayi: '活着最重要。你已经超过大多数人了，因为你没有亏钱。',
+};
+
+// ===== 测试状态 =====
+let currentQ = 0;
+let answers = []; // 每个问题选中的 pet 数组
+let selectedOptions = []; // 每题选中的选项索引
+
+function startQuiz() {
+  currentQ = 0;
+  answers = [];
+  selectedOptions = [];
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('questionScreen').style.display = 'block';
+  document.getElementById('resultScreen').style.display = 'none';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('progressText').textContent = `第 ${currentQ + 1} 题 / 共 ${QUESTIONS.length} 题`;
+  const pct = Math.round((currentQ / QUESTIONS.length) * 100);
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  q.opts.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option' + (selectedOptions[currentQ] === idx ? ' selected' : '');
+    btn.onclick = () => selectOption(idx);
+    btn.innerHTML = `<span class="opt-letter">${opt.letter}</span><span class="opt-text">${opt.text}</span>`;
+    container.appendChild(btn);
+  });
+
+  document.getElementById('prevBtn').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+  document.getElementById('nextBtn').textContent = currentQ === QUESTIONS.length - 1 ? '查看结果 →' : '下题 →';
+  document.getElementById('nextBtn').disabled = selectedOptions[currentQ] === undefined;
+}
+
+function selectOption(idx) {
+  selectedOptions[currentQ] = idx;
+  const q = QUESTIONS[currentQ];
+  answers[currentQ] = q.opts[idx].pets;
+  // 重新渲染选项状态
+  document.querySelectorAll('.option').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+  });
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function nextQuestion() {
+  if (selectedOptions[currentQ] === undefined) return;
+  if (currentQ < QUESTIONS.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('questionScreen').style.display = 'none';
+  document.getElementById('resultScreen').style.display = 'block';
+
+  // 计算每个宠物的得分
+  const petScores = {};
+  answers.forEach(pets => {
+    pets.forEach(pet => {
+      petScores[pet] = (petScores[pet] || 0) + 1;
+    });
+  });
+
+  // 排序，取 Top
+  const sorted = Object.entries(petScores).sort((a, b) => b[1] - a[1]);
+  const bestId = sorted[0][0];
+  const bestPet = PETS_INFO[bestId] || PETS_INFO['songguo'];
+  const top3 = sorted.slice(0, 3);
+  const matchRate = Math.min(95, 55 + sorted[0][1] * 5);
+
+  document.getElementById('resultEmoji').textContent = bestPet.emoji;
+  document.getElementById('resultPetName').textContent = `${bestPet.emoji} ${bestPet.name}`;
+  document.getElementById('resultLabel').textContent = `投资人格：${bestPet.style}`;
+  document.getElementById('resultMatch').textContent = `匹配度：${matchRate}%`;
+
+  const tagsEl = document.getElementById('resultTags');
+  tagsEl.innerHTML = `
+    <span class="badge badge-gold">${bestPet.catchphrase}</span>
+    <span class="badge badge-muted">${bestPet.style}</span>
+  `;
+
+  const bubbleEl = document.getElementById('resultBubble');
+  const bubbleText = PET_BUBBLES[bestId] || PET_BUBBLES['songguo'];
+  bubbleEl.innerHTML = `<strong>${bestPet.emoji} ${bestPet.name}：</strong>${bubbleText}`;
+
+  // Top3
+  const top3El = document.getElementById('top3Container');
+  top3El.innerHTML = '';
+  top3.forEach((item, i) => {
+    const pet = PETS_INFO[item[0]] || PETS_INFO['songguo'];
+    const m = Math.min(95, 55 + item[1] * 5);
+    top3El.innerHTML += `
+      <div class="top3-item">
+        <div class="top3-emoji">${pet.emoji}</div>
+        <div class="top3-info">
+          <div class="top3-name">${i + 1}. ${pet.name}</div>
+          <div class="top3-style">${pet.style}</div>
+        </div>
+        <div class="top3-match">${m}%</div>
+      </div>
+    `;
+  });
+
+  // CTA：中间定向到 Skill 安装
+  const ctaBtn = document.getElementById('getPetBtn');
+  const skillUrl = `https://clawhub.ai/lj22503/investment-buddy-pet?pet=${bestId}`;
+  ctaBtn.href = skillUrl;
+}
+
+function retakeTest() {
+  startQuiz();
+}
+
+// 移动端菜单
+document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => {
+  document.querySelector('.nav-links')?.classList.toggle('open');
+});
+</script>
+
+</body>
+</html>

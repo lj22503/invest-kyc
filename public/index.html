@@ -3,1252 +3,405 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mangofolio 投资人格测试 - 种得对，等得久</title>
-  <meta name="description" content="Mangofolio AI 投资助手 - 10 道趣味测试题，找到你的投资本命宠物，获得专属投资人格标签">
-  <meta name="keywords" content="Mangofolio, AI 投资助手，投资测试，人格测试，种得对等得久，芒格，芒果">
-  
-  <!-- Open Graph / 微信分享 -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Mangofolio 投资人格测试 - 种得对，等得久">
-  <meta property="og:description" content="我的投资人格是「数据狂魔」，你的呢？Mangofolio = 芒格的价值投资 + 芒果的耐心成长">
-  <meta property="og:image" content="https://kyc.mangofolio.com/static/share-card.png">
-  
-  <!-- JSON-LD 元数据 -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Mangofolio 投资人格测试",
-    "description": "10 道趣味测试题，找到你的投资本命宠物",
-    "url": "https://kyc.mangofolio.com",
-    "author": {
-      "@type": "Person",
-      "name": "燃冰",
-      "url": "https://mangofolio.com"
-    },
-    "provider": {
-      "@type": "Organization",
-      "name": "Mangofolio",
-      "url": "https://mangofolio.com"
-    },
-    "version": "v1.0",
-    "methodology": "范蠡商情研判 + 四专家框架",
-    "license": "CC BY-NC-SA 4.0",
-    "slogan": "种得对，等得久"
-  }
-  </script>
-  
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Serif SC", serif;
-      background: linear-gradient(135deg, #F5E6D3 0%, #E8D5B5 50%, #D4C4A8 100%);
-      min-height: 100vh;
-      padding: 20px;
-      color: #5C4033;
-      line-height: 1.7;
-    }
-    
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .brand-bar {
-      text-align: center;
-      padding: 10px 0;
-      font-size: 12px;
-      color: #8B7355;
-      letter-spacing: 1px;
-    }
-    
-    .brand-bar .slogan {
-      margin-left: 15px;
-      color: #B8860B;
-      font-weight: 600;
-    }
-    
-    .footer {
-      text-align: center;
-      padding: 30px 20px;
-      margin-top: 30px;
-      border-top: 2px solid #E8D5B5;
-    }
-    
-    .disclaimer {
-      background: linear-gradient(135deg, #FFF8F0, #F5E6D3);
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      border-left: 5px solid #B8860B;
-    }
-    
-    .disclaimer p {
-      margin: 5px 0;
-      font-size: 14px;
-      color: #5C4033;
-    }
-    
-    .signature {
-      font-size: 12px;
-      color: #8B7355;
-      line-height: 1.8;
-    }
-    
-    .header {
-      text-align: center;
-      color: #5C4033;
-      padding: 50px 20px;
-      margin-bottom: 30px;
-    }
-    
-    .header h1 {
-      font-size: 42px;
-      margin-bottom: 15px;
-      font-weight: 700;
-      letter-spacing: 8px;
-      font-family: "Noto Serif SC", serif;
-      color: #5C4033;
-    }
-    
-    .header p {
-      font-size: 18px;
-      color: #8B7355;
-      font-style: italic;
-      letter-spacing: 2px;
-    }
-    
-    .result-title {
-      font-size: 32px;
-      color: #5C4033;
-      margin-bottom: 15px;
-      font-weight: 700;
-      font-family: "Noto Serif SC", serif;
-      letter-spacing: 3px;
-    }
-    
-    .card {
-      background: linear-gradient(135deg, #FFFDF5, #F8F0E0);
-      border-radius: 16px;
-      padding: 35px;
-      margin-bottom: 20px;
-      border: 2px solid #E8D5B5;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    }
-    
-    .progress-bar {
-      background: #f0f0f0;
-      height: 8px;
-      border-radius: 4px;
-      margin-bottom: 30px;
-      overflow: hidden;
-    }
-    
-    .progress-fill {
-      background: linear-gradient(90deg, #B8860B, #8B7355);
-      height: 100%;
-      transition: width 0.3s ease;
-    }
-    
-    .question-number {
-      font-size: 14px;
-      color: #B8860B;
-      font-weight: 600;
-      margin-bottom: 10px;
-      letter-spacing: 1px;
-    }
-    
-    .question-text {
-      font-size: 20px;
-      color: #5C4033;
-      margin-bottom: 25px;
-      line-height: 1.7;
-      font-weight: 600;
-    }
-    
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    
-    .option {
-      padding: 18px 20px;
-      border: 2px solid #E8D5B5;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 16px;
-      color: #5C4033;
-      background: #FFFDF8;
-    }
-    
-    .option:hover {
-      border-color: #B8860B;
-      background: #FFFDF5;
-      transform: translateY(-2px);
-    }
-    
-    .option.selected {
-      border-color: #B8860B;
-      background: linear-gradient(135deg, #B8860B 0%, #8B7355 100%);
-      color: white;
-    }
-    
-    .result-card {
-      text-align: center;
-      padding: 40px 20px;
-    }
-    
-    .pet-emoji {
-      font-size: 80px;
-      margin-bottom: 20px;
-      animation: bounce 1s ease infinite;
-    }
-    
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    
-    .result-title {
-      font-size: 28px;
-      color: #333;
-      margin-bottom: 10px;
-    }
-    
-    .result-label {
-      font-size: 18px;
-      color: #B8860B;
-      font-weight: 600;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
-    }
-    
-    .result-match {
-      font-size: 16px;
-      color: #8B7355;
-      margin-bottom: 30px;
-      font-weight: 600;
-    }
-    
-    .result-description {
-      font-size: 15px;
-      color: #666;
-      line-height: 1.6;
-      margin-bottom: 30px;
-      text-align: left;
-      background: #f8f9ff;
-      padding: 20px;
-      border-radius: 12px;
-    }
-    
-    .share-buttons {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 20px;
-    }
-    
-    .btn {
-      padding: 15px 30px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-    .btn-primary {
-      background: linear-gradient(135deg, #B8860B 0%, #8B7355 100%);
-      color: white;
-      letter-spacing: 1px;
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(184,134,11,0.4);
-    }
-    
-    .btn-secondary {
-      background: white;
-      color: #B8860B;
-      border: 2px solid #B8860B;
-    }
-    
-    .btn-secondary:hover {
-      background: #FFFDF5;
-    }
-    
-    .top3 {
-      text-align: left;
-      margin-top: 30px;
-      padding-top: 30px;
-      border-top: 2px solid #f0f0f0;
-    }
-    
-    .top3-item {
-      display: flex;
-      align-items: center;
-      padding: 12px;
-      margin-bottom: 10px;
-      background: #f8f9ff;
-      border-radius: 8px;
-    }
-    
-    .top3-emoji {
-      font-size: 32px;
-      margin-right: 15px;
-    }
-    
-    .top3-info {
-      flex: 1;
-    }
-    
-    .top3-name {
-      font-weight: 600;
-      color: #5C4033;
-    }
-    
-    .top3-label {
-      font-size: 13px;
-      color: #8B7355;
-    }
-    
-    .top3-match {
-      font-size: 14px;
-      color: #B8860B;
-      font-weight: 600;
-    }
-    
-    .footer {
-      text-align: center;
-      color: #5C4033;
-      padding: 20px;
-      font-size: 14px;
-      margin-top: 30px;
-      letter-spacing: 1px;
-    }
-    
-    /* 自运营模块样式 */
-    .viral-section {
-      background: white;
-      border-radius: 16px;
-      padding: 25px;
-      margin-top: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    }
-    
-    .viral-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: #333;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .viral-card {
-      background: linear-gradient(135deg, #fff5f5, #fff);
-      border: 2px solid #ffd5d5;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 15px;
-    }
-    
-    .viral-card.highlight {
-      background: linear-gradient(135deg, #f0f7ff, #fff);
-      border-color: #d5e8ff;
-    }
-    
-    .viral-card.warning {
-      background: linear-gradient(135deg, #fff9e6, #fff);
-      border-color: #ffe8a3;
-    }
-    
-    .viral-emoji {
-      font-size: 24px;
-      margin-right: 10px;
-    }
-    
-    .viral-text {
-      font-size: 14px;
-      color: #666;
-      line-height: 1.6;
-      margin-bottom: 12px;
-    }
-    
-    .viral-text strong {
-      color: #333;
-    }
-    
-    .viral-action {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    
-    .viral-btn {
-      flex: 1;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-    }
-    
-    .viral-btn-primary {
-      background: linear-gradient(135deg, #B8860B 0%, #8B7355 100%);
-      color: white;
-      letter-spacing: 1px;
-    }
-    
-    .viral-btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 20px rgba(184,134,11,0.4);
-    }
-    
-    .viral-btn-secondary {
-      background: white;
-      color: #667eea;
-      border: 2px solid #667eea;
-    }
-    
-    .viral-btn-secondary:hover {
-      background: #f8f9ff;
-    }
-    
-    .viral-btn-wechat {
-      background: #07c160;
-      color: white;
-    }
-    
-    .viral-btn-wechat:hover {
-      background: #06ad56;
-    }
-    
-    .qr-code {
-      text-align: center;
-      margin: 20px 0;
-    }
-    
-    .qr-code img {
-      width: 200px;
-      height: 200px;
-      border-radius: 8px;
-      border: 2px solid #e0e0e0;
-    }
-    
-    .qr-code-text {
-      font-size: 13px;
-      color: #999;
-      margin-top: 10px;
-    }
-    
-    .funny-footer {
-      background: linear-gradient(135deg, #fef9f0, #fff);
-      border: 2px dashed #ffd5a3;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-      text-align: center;
-    }
-    
-    .funny-footer-text {
-      font-size: 13px;
-      color: #666;
-      line-height: 1.8;
-      margin-bottom: 10px;
-    }
-    
-    .funny-footer-highlight {
-      color: #ff6b6b;
-      font-weight: 600;
-    }
-    
-    .disclaimer {
-      background: linear-gradient(135deg, #F5E6D3, #E8D5B5);
-      border-left: 5px solid #5C4033;
-      padding: 20px 25px;
-      border-radius: 12px;
-      margin-top: 20px;
-      font-style: italic;
-      font-family: "Noto Serif SC", serif;
-      line-height: 2;
-    }
-    
-    .quote-mango {
-      background: linear-gradient(135deg, #FFF8F0, #F5E6D3);
-      padding: 25px 30px;
-      border-radius: 12px;
-      font-size: 17px;
-      color: #3D2817;
-      margin: 20px 0;
-      border-left: 5px solid #B8860B;
-      font-style: italic;
-      font-family: "Noto Serif SC", serif;
-      line-height: 2;
-      text-align: center;
-    }
-    
-    .disclaimer-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #856404;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    
-    .disclaimer-text {
-      font-size: 12px;
-      color: #856404;
-      line-height: 1.6;
-    }
-    
-    .hidden {
-      display: none;
-    }
-    
-    .profile-card {
-      background: linear-gradient(135deg, #FFFDF5, #F8F0E0);
-      border-radius: 16px;
-      padding: 25px;
-      margin: 15px 0;
-      border: 2px solid #E8D5B5;
-    }
-    
-    .migration-cost {
-      background: linear-gradient(135deg, #FFF8F0, #F5E6D3);
-      padding: 25px;
-      border-radius: 12px;
-      border-left: 5px solid #B8860B;
-      margin: 20px 0;
-    }
-    
-    .migration-cost h3 {
-      color: #5C4033;
-      margin-bottom: 10px;
-    }
-    
-    .migration-cost p {
-      margin: 8px 0;
-      color: #5C4033;
-    }
-    
-    .migration-cost ul {
-      margin: 10px 0;
-      padding-left: 20px;
-    }
-    
-    .migration-cost li {
-      margin: 5px 0;
-      color: #5C4033;
-    }
-  </style>
+  <title>Invest Buddy — 投资界的 MBTI，找到你的本命宠物</title>
+  <meta name="description" content="12只投资宠物，对应12种真实行为偏差。不是理财师，不是机器人，是一只懂你的陪伴。">
+  <link rel="stylesheet" href="assets/styles/global.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
 </head>
 <body>
+
+<!-- 导航 -->
+<nav class="site-nav">
   <div class="container">
-    <!-- 品牌标识 -->
-    <div class="brand-bar">
-      <span>Powered by Mangofolio</span>
-      <span class="slogan">种得对，等得久</span>
+    <a href="/" class="nav-logo">
+      <span class="logo-emoji">🐾</span>
+      <span>Invest Buddy</span>
+    </a>
+    <div class="nav-links">
+      <a href="#why">为什么需要宠物</a>
+      <a href="#care-packages">4大陪伴包</a>
+      <a href="#pets">宠物展示</a>
+      <a href="knowledge.html">技能体系</a>
     </div>
-    <!-- 头部 -->
-    <div class="header">
-      <h1>🐾 投资人格测试</h1>
-      <p>10 道题，找到你的本命宠物 · Mangofolio = 芒格的价值投资 + 芒果的耐心成长</p>
+    <div class="nav-cta">
+      <a href="quiz.html" class="btn btn-primary btn-sm">开始测试</a>
     </div>
-    
-    <!-- 测试页面 -->
-    <div id="quiz-page" class="card">
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
-      </div>
-      
-      <div class="question-number" id="question-number">第 1 题 / 共 10 题</div>
-      <div class="question-text" id="question-text">加载中...</div>
-      
-      <div class="options" id="options-container">
-        <!-- 选项动态生成 -->
-      </div>
+    <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="菜单">☰</button>
+  </div>
+</nav>
+
+<!-- 节点一：Hero -->
+<section class="section-hero" style="background: var(--bg-page); padding: 100px 0 80px;">
+  <div class="container text-center">
+    <div class="mb-4">
+      <span class="badge badge-gold">🐾 投资陪伴</span>
     </div>
-    
-    <!-- 结果页面 -->
-    <div id="result-page" class="card result-card hidden">
-      <div class="pet-emoji" id="result-emoji">🎉</div>
-      <h2 class="result-title" id="result-pet-name">你的本命宠物</h2>
-      <div class="result-label" id="result-label">投资人格：数据狂魔</div>
-      <div class="result-match" id="result-match">匹配度：95%</div>
-      
-      <div class="result-description" id="result-description">
-        <!-- 描述动态生成 -->
-      </div>
-      
-      <div class="top3" id="top3-container">
-        <h3 style="margin-bottom: 15px; color: #333;">你的 Top 3</h3>
-        <!-- Top 3 动态生成 -->
-      </div>
-      
-      <div style="margin-top: 30px;">
-        <button class="btn btn-primary" onclick="shareResult()">分享我的结果</button>
-        <button class="btn btn-secondary" onclick="retakeTest()" style="margin-top: 10px;">再测一次</button>
-        <button class="btn btn-secondary" onclick="showUserProfile()" style="margin-top: 10px;">👤 查看我的档案</button>
-        <button class="btn btn-secondary" onclick="showEvolutionReport()" style="margin-top: 10px;">📊 查看进化报告</button>
-      </div>
-      
-      <!-- 投资者教育说明 -->
-      <div class="disclaimer">
-        <div class="disclaimer-title">
-          📚 投资者教育说明
+    <h1 class="display-xl" style="margin-bottom: 20px;">
+      你是哪种投资者？
+    </h1>
+    <p class="body-lg" style="max-width: 560px; margin: 0 auto 40px;">
+      不是问你想要多少收益。是问，你的行为模式是什么。
+    </p>
+    <p class="body" style="max-width: 500px; margin: 0 auto 48px; color: var(--text-secondary);">
+      12只投资宠物，对应12种真实存在的行为偏差。<br>
+      没有人是"理性人"，但有人更了解自己。
+    </p>
+    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:48px;">
+      <a href="quiz.html" class="btn btn-primary btn-lg">开始测试</a>
+      <a href="#why" class="btn btn-ghost">了解更多 ↓</a>
+    </div>
+    <!-- 宠物阵列 -->
+    <div style="font-size:52px; letter-spacing:4px; opacity:0.7; cursor:default; user-select:none;">
+      🐿️ 🐢 🐘 🐺 🦁 🐬 🐰 🦉 🦎 🦅 🐙 🦄 🐪
+    </div>
+    <p class="caption" style="margin-top:12px;">Hover 宠物 · 12种风格</p>
+  </div>
+</section>
+
+<!-- 节点二：痛点共鸣 -->
+<section id="why" class="section" style="background: var(--bg-card);">
+  <div class="container">
+    <div class="text-center" style="margin-bottom: 56px;">
+      <h2 class="h1" style="margin-bottom: 16px;">投资最难的事，不是选股</h2>
+      <p class="body-lg">你不是在和市场博弈，是在和自己的人性博弈</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
+
+      <!-- 场景1 -->
+      <div style="display:flex; gap:20px; flex-direction:column;">
+        <div style="width:52px; height:52px; background:rgba(184,134,11,0.1); border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <span style="font-size:26px;">📉</span>
         </div>
-        <div class="disclaimer-text">
-          <strong>本测试是投资者教育工具，不是投资建议。</strong><br><br>
-          测试目的：帮助你了解自己的投资性格，找到适合的陪伴宠物。<br>
-          测试内容：基于投资心理学和行为金融学设计，仅供学习参考。<br>
-          宠物功能：提供情感陪伴、定投提醒、知识普及，<strong>不推荐具体产品</strong>。<br><br>
-          ⚠️ 市场有风险，投资需谨慎。请独立判断并自行承担风险。
-        </div>
-      </div>
-      
-      <!-- 技能下载引导 -->
-      <div class="viral-section">
-        <div class="viral-title">
-          🎁 你的专属宠物技能已解锁
-        </div>
-        
-        <div class="viral-card highlight">
-          <div class="viral-text">
-            <span class="viral-emoji">🐾</span>
-            恭喜你找到本命宠物！现在可以下载 <strong>投资宠物技能</strong>，让它住进你的设备，每日陪伴你投资成长。
-          </div>
-          <div class="viral-text">
-            <strong>技能功能：</strong>
-            <br>• 💓 情感陪伴 - 市场波动时安抚你
-            <br>• ⏰ 主动提醒 - 定投日、估值提醒
-            <br>• 📊 投资技能 - 指数估值、行业监测、持仓诊断
-            <br>• 🌱 成长养成 - 宠物升级、技能解锁
-          </div>
-          
-          <!-- 合规承诺（移到技能模块内） -->
-          <div class="viral-card warning" style="margin-top: 15px;">
-            <div class="viral-text">
-              <span class="viral-emoji">🔒</span>
-              <strong>合规承诺：</strong><br>
-              • 本技能不推荐具体基金/股票<br>
-              • 不承诺收益或保证赚钱<br>
-              • 不提供市场择时建议<br>
-              • 用户数据本地存储，不上传云端<br>
-              • 所有数据仅供参考，可能存在延迟
-            </div>
-          </div>
-          
-          <!-- 安装指引 -->
-          <div class="viral-text" style="margin-top: 15px;">
-            <strong>📋 安装指引：</strong><br>
-            复制下方提示词，发给 <strong>小龙虾</strong> 以部署 Pet Skill
-          </div>
-          
-          <div class="viral-action">
-            <button onclick="copySkillLink()" class="viral-btn viral-btn-primary">
-              📋 一键复制
-            </button>
-            <a href="https://github.com/lj22503/investment-buddy-pet/blob/main/README.md" target="_blank" class="viral-btn viral-btn-secondary">
-              📖 查看文档
-            </a>
+        <div>
+          <h3 class="h3" style="margin-bottom:10px;">大跌那天，你做了什么？</h3>
+          <p class="body" style="color:var(--text-secondary); margin-bottom:16px;">
+            市场单日跌3%+，你的第一反应是：关掉APP、赶紧卖出、还是想加仓？
+          </p>
+          <div class="bubble">
+            <span style="font-size:20px; margin-right:4px;">🐿️</span>
+            "历史上沪深300跌幅>3%有287次，91.6%在3个月内涨回来了。你已经坚持了182天——现在正是积累便宜筹码的时候。"
           </div>
         </div>
       </div>
-      
-      <!-- 底部有趣话术（SSBTI 风格 + 投资者教育） -->
-      <div class="funny-footer">
-        <div class="funny-footer-text">
-          <span class="funny-footer-highlight">💡 投资小课堂：</span>
-          <br>
-          测试帮你了解性格，<span class="funny-footer-highlight">学习帮你提升能力</span>。
-          <br>
-          宠物陪你走过市场起伏，但决策要靠自己。
+
+      <!-- 场景2 -->
+      <div style="display:flex; gap:20px; flex-direction:column;">
+        <div style="width:52px; height:52px; background:rgba(184,134,11,0.1); border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <span style="font-size:26px;">💰</span>
         </div>
-        <div class="funny-footer-text">
-          <span class="funny-footer-highlight">📖 记住三句话：</span>
-          <br>
-          1. 没人能预测市场短期走势<br>
-          2. 长期持有 + 分散投资 = 大概率赢<br>
-          3. <span class="funny-footer-highlight">最好的投资是投资自己的认知</span>
-        </div>
-        <div class="funny-footer-text">
-          <span class="funny-footer-highlight">🐾 关于宠物技能：</span>
-          <br>
-          它会提醒你定投，但不会告诉你买什么基金。<br>
-          它会安抚你情绪，但不会承诺你能赚多少。<br>
-          <span class="funny-footer-highlight">它是陪伴者，不是决策者。</span>
-        </div>
-        <div class="funny-footer-text" style="font-size: 13px; color: #8B7355; margin-top: 20px; font-style: italic; letter-spacing: 2px;">
-          🥭 种得对，等得久 · MangoFolio
-        </div>
-        <div class="funny-footer-text" style="font-size: 11px; color: #8B7355; margin-top: 10px;">
-          投资者教育 · 金融合规 · 数据本地存储
+        <div>
+          <h3 class="h3" style="margin-bottom:10px;">别人赚钱，你的焦虑值</h3>
+          <p class="body" style="color:var(--text-secondary); margin-bottom:16px;">
+            朋友圈有人晒收益：这只基一周涨了15%。你的手已经点开了买入页面。
+          </p>
+          <div class="bubble">
+            <span style="font-size:20px; margin-right:4px;">🐺</span>
+            "80%的追涨买入，3个月内都会回调。能告诉我，你买的原因是深入研究，还是'怕错过'？"
+          </div>
         </div>
       </div>
+
+      <!-- 场景3 -->
+      <div style="display:flex; gap:20px; flex-direction:column;">
+        <div style="width:52px; height:52px; background:rgba(184,134,11,0.1); border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <span style="font-size:26px;">📋</span>
+        </div>
+        <div>
+          <h3 class="h3" style="margin-bottom:10px;">你有投资体系吗？</h3>
+          <p class="body" style="color:var(--text-secondary); margin-bottom:16px;">
+            跌了卖、涨了追、年底一看——白忙。缺乏体系，等于没有锚点。
+          </p>
+          <div class="bubble">
+            <span style="font-size:20px; margin-right:4px;">🦉</span>
+            "每次操作前，先问自己三个问题：有逻辑吗？有止损吗？是因为分析还是因为情绪？"
+          </div>
+        </div>
+      </div>
+
     </div>
-    
-    <!-- 用户档案页面 -->
-    <div id="profile-page" class="card hidden">
-      <h2 style="text-align: center; color: #5C4033; margin-bottom: 20px;">👤 我的投资档案</h2>
-      <div id="profile-content">
-        <!-- 动态生成 -->
-      </div>
-      <div style="text-align: center; margin-top: 20px;">
-        <button class="btn btn-primary" onclick="goBack()">返回测试</button>
-      </div>
-    </div>
-    
-    <!-- 进化报告页面 -->
-    <div id="evolution-page" class="card hidden">
-      <h2 style="text-align: center; color: #5C4033; margin-bottom: 20px;">📊 我的进化报告</h2>
-      <div id="evolution-content">
-        <!-- 动态生成 -->
-      </div>
-      <div style="text-align: center; margin-top: 20px;">
-        <button class="btn btn-primary" onclick="goBack()">返回测试</button>
-      </div>
-    </div>
-    
-    <!-- 底部 -->
-    <div class="footer">
-      <p>🐾 投资有风险，测试仅供娱乐</p>
-      <p style="margin-top: 5px;">Powered by MangoFolio · 种得对，等得久 🥭</p>
+
+    <div class="text-center" style="margin-top: 56px;">
+      <p class="body" style="color:var(--text-secondary); max-width:480px; margin:0 auto 24px;">
+        这不是知识问题，是人性问题。<br>知道归知道，操作归操作——所以你需要一只宠物。
+      </p>
+      <a href="quiz.html" class="btn btn-primary">测一测我的投资人格 →</a>
     </div>
   </div>
-  
-  <script>
-    // 测试题目数据
-    const QUESTIONS = [
-      {
-        id: 1,
-        question: "市场大跌 20%，你的第一反应是？",
-        options: {
-          A: { text: "关掉 APP，假装没这回事", pets: ["wugui", "songguo"] },
-          B: { text: "打开 APP，看看能不能抄底", pets: ["luotuo", "maotouying"] },
-          C: { text: "赶紧卖出，保住本金", pets: ["mayi", "haitun"] },
-          D: { text: "加仓！别人恐惧我贪婪！", pets: ["shizi", "lang"] }
-        }
-      },
-      {
-        id: 2,
-        question: "你买基金/股票的方式更像？",
-        options: {
-          A: { text: "定投，每月自动扣款，眼不见为净", pets: ["songguo", "haitun"] },
-          B: { text: "研究财报，分析估值，写满三页笔记", pets: ["maotouying", "shizi"] },
-          C: { text: "看 K 线，找趋势，顺势而为", pets: ["ying", "junma"] },
-          D: { text: "分散买一堆，总有一个会涨吧", pets: ["huli", "mayi"] }
-        }
-      },
-      {
-        id: 3,
-        question: "朋友推荐了一只大涨的基金，你会？",
-        options: {
-          A: { text: "心动，但忍住不追", pets: ["wugui", "luotuo"] },
-          B: { text: "赶紧研究一下，是不是真有机会", pets: ["maotouying", "dunjiaoshou"] },
-          C: { text: "先买一点试试水", pets: ["huli", "haitun"] },
-          D: { text: "全仓杀入，错过就没了！", pets: ["shizi", "lang"] }
-        }
-      },
-      {
-        id: 4,
-        question: "你的投资账户，平时打开频率是？",
-        options: {
-          A: { text: "一个月一次，怕看到亏损", pets: ["wugui", "songguo"] },
-          B: { text: "每天一次，看看涨跌", pets: ["haitun", "huli"] },
-          C: { text: "每天 N 次，盯盘是爱好", pets: ["ying", "junma"] },
-          D: { text: "不看，我相信我的策略", pets: ["maotouying", "luotuo"] }
-        }
-      },
-      {
-        id: 5,
-        question: "你觉得投资最重要的是？",
-        options: {
-          A: { text: "别亏钱，活着最重要", pets: ["mayi", "wugui"] },
-          B: { text: "找到好公司，长期拿着", pets: ["shizi", "maotouying"] },
-          C: { text: "低买高卖，把握节奏", pets: ["ying", "junma"] },
-          D: { text: "分散风险，别赌单边", pets: ["huli", "haitun"] }
-        }
-      },
-      {
-        id: 6,
-        question: "你的持仓亏损多少会让你睡不着？",
-        options: {
-          A: { text: "亏损 5% 就开始焦虑", pets: ["mayi", "songguo"] },
-          B: { text: "亏损 10% 还能接受", pets: ["haitun", "huli", "daxiang"] },
-          C: { text: "亏损 20% 也淡定", pets: ["wugui", "luotuo", "maotouying"] },
-          D: { text: "亏损？那是加仓机会！", pets: ["shizi", "lang", "dunjiaoshou"] }
-        }
-      },
-      {
-        id: 7,
-        question: "你如何看待'别人恐惧我贪婪'这句话？",
-        options: {
-          A: { text: "有道理，但我做不到", pets: ["songguo", "mayi", "haitun"] },
-          B: { text: "这就是我的人生信条！", pets: ["luotuo", "shizi"] },
-          C: { text: "要看情况，不能盲目", pets: ["maotouying", "huli"] },
-          D: { text: "我已经在执行了", pets: ["lang", "ying"] }
-        }
-      },
-      {
-        id: 8,
-        question: "你的投资知识主要来自？",
-        options: {
-          A: { text: "看书/经典投资著作", pets: ["wugui", "maotouying", "luotuo"] },
-          B: { text: "看公众号/大 V/博主", pets: ["haitun", "huli", "mayi"] },
-          C: { text: "自己摸索，实战经验", pets: ["shizi", "lang", "ying"] },
-          D: { text: "系统学习过金融/投资专业", pets: ["dunjiaoshou", "junma"] }
-        }
-      },
-      {
-        id: 9,
-        question: "你希望多久看到投资收益？",
-        options: {
-          A: { text: "3 年以上，我可以等", pets: ["wugui", "shizi", "maotouying"] },
-          B: { text: "1-3 年，中期目标", pets: ["huli", "daxiang", "luotuo"] },
-          C: { text: "3-12 个月，不要太久", pets: ["haitun", "songguo", "junma"] },
-          D: { text: "越快越好，最好是明天", pets: ["lang", "ying", "dunjiaoshou"] }
-        }
-      },
-      {
-        id: 10,
-        question: "最后，用一个词形容你的投资风格？",
-        options: {
-          A: { text: "苟", pets: ["wugui", "mayi", "songguo"] },
-          B: { text: "稳", pets: ["haitun", "huli", "daxiang"] },
-          C: { text: "准", pets: ["maotouying", "luotuo", "shizi"] },
-          D: { text: "狠", pets: ["lang", "ying", "dunjiaoshou", "junma"] }
-        }
-      }
-    ];
+</section>
 
-    // 宠物信息
-    const PETS_INFO = {
-      songguo: { name: "松果", emoji: "🐿️", style: "谨慎定投", catchphrase: "慢慢来，比较快", description: "性格：谨慎、爱囤积、安全感第一\n策略：极简定投，自动储蓄" },
-      wugui: { name: "慢慢", emoji: "🐢", style: "长期主义", catchphrase: "时间是我的朋友", description: "性格：超有耐心、淡泊名利\n策略：指数定投，长期持有" },
-      maotouying: { name: "智多星", emoji: "🦉", style: "理性分析", catchphrase: "让我们看看基本面...", description: "性格：理性、爱研究、注重数据\n策略：深度分析，价值投资" },
-      lang: { name: "孤狼", emoji: "🐺", style: "激进成长", catchphrase: "高风险高回报", description: "性格：果断、冒险、追求成长\n策略：趋势追踪，主动出击" },
-      daxiang: { name: "稳稳", emoji: "🐘", style: "稳健配置", catchphrase: "稳字当头", description: "性格：稳重、平衡、大而稳\n策略：资产配置，分散投资" },
-      ying: { name: "鹰眼", emoji: "🦅", style: "趋势交易", catchphrase: "风向变了！", description: "性格：敏锐、果断、顺势而为\n策略：技术分析，把握趋势" },
-      huli: { name: "狐狐", emoji: "🦊", style: "灵活配置", catchphrase: "别把鸡蛋放在一个篮子里~", description: "性格：机智、多元、适应变化\n策略：资产配置，分散风险" },
-      haitun: { name: "豚豚", emoji: "🐬", style: "指数投资", catchphrase: "跟着大海流，省力又安心~", description: "性格：聪明、随大流、不折腾\n策略：指数基金，低费用" },
-      shizi: { name: "狮王", emoji: "🦁", style: "集中投资", catchphrase: "看准了，就全力出击！", description: "性格：勇敢、专注、重仓出击\n策略：深度研究，集中持仓" },
-      mayi: { name: "蚁蚁", emoji: "🐜", style: "分散投资", catchphrase: "多一个朋友，多一条路~", description: "性格：谨慎、分散、安全第一\n策略：极度分散，风险可控" },
-      luotuo: { name: "驼驼", emoji: "🐪", style: "逆向投资", catchphrase: "别人恐惧时，我前进...", description: "性格：耐力、反人性、沙漠寻水\n策略：逆向布局，等待反转" },
-      dunjiaoshou: { name: "角角", emoji: "🦄", style: "成长投资", catchphrase: "未来已来！", description: "性格：眼光、未来导向、高成长\n策略：科技成长，追求高收益" },
-      junma: { name: "马马", emoji: "🐎", style: "行业轮动", catchphrase: "换道超车！", description: "性格：速度、切换、把握节奏\n策略：行业轮动，换道超车" }
-    };
-
-    // 自嘲标签
-    const SELF_DEPRECATING_LABELS = {
-      songguo: "囤囤鼠型投资者",
-      wugui: "装死流大师",
-      maotouying: "数据狂魔",
-      lang: "梭哈战神",
-      daxiang: "端水艺术家",
-      ying: "追风少年",
-      huli: "端水大师",
-      haitun: "躺平赢家",
-      shizi: "重仓猛男",
-      mayi: "保命第一名",
-      luotuo: "逆向孤勇者",
-      dunjiaoshou: "梦想投资人",
-      junma: "换道赛车手"
-    };
-
-    // 状态变量
-    let currentQuestion = 0;
-    let answers = {};
-    let petScores = {};
-
-    // 初始化
-    function init() {
-      currentQuestion = 0;
-      answers = {};
-      petScores = {};
-      Object.keys(PETS_INFO).forEach(pet => petScores[pet] = 0);
-      showQuestion(0);
-    }
-
-    // 显示题目
-    function showQuestion(index) {
-      const question = QUESTIONS[index];
-      document.getElementById('question-number').textContent = `第 ${index + 1} 题 / 共 ${QUESTIONS.length} 题`;
-      document.getElementById('question-text').textContent = question.question;
-      document.getElementById('progress-fill').style.width = `${((index) / QUESTIONS.length) * 100}%`;
-      
-      const optionsContainer = document.getElementById('options-container');
-      optionsContainer.innerHTML = '';
-      
-      ['A', 'B', 'C', 'D'].forEach(key => {
-        const option = question.options[key];
-        const div = document.createElement('div');
-        div.className = 'option';
-        div.textContent = `${key}. ${option.text}`;
-        div.onclick = () => selectOption(key, option.pets);
-        optionsContainer.appendChild(div);
-      });
-    }
-
-    // 选择选项
-    function selectOption(key, pets) {
-      answers[currentQuestion + 1] = key;
-      
-      // 更新宠物分数
-      pets.forEach(pet => {
-        petScores[pet] += 2;
-      });
-      
-      // 视觉反馈
-      const options = document.querySelectorAll('.option');
-      options.forEach(opt => {
-        if (opt.textContent.startsWith(key + '.')) {
-          opt.classList.add('selected');
-        }
-      });
-      
-      // 延迟后进入下一题
-      setTimeout(() => {
-        currentQuestion++;
-        if (currentQuestion < QUESTIONS.length) {
-          showQuestion(currentQuestion);
-        } else {
-          showResult();
-        }
-      }, 300);
-    }
-
-    // 显示结果
-    function showResult() {
-      document.getElementById('quiz-page').classList.add('hidden');
-      document.getElementById('result-page').classList.remove('hidden');
-      
-      // 排序宠物
-      const sortedPets = Object.entries(petScores).sort((a, b) => b[1] - a[1]);
-      const top3 = sortedPets.slice(0, 3);
-      const bestPetId = top3[0][0];
-      const bestPet = PETS_INFO[bestPetId];
-      const bestLabel = SELF_DEPRECATING_LABELS[bestPetId];
-      const matchRate = Math.min(95, 55 + top3[0][1] * 6);
-      
-      // 填充结果
-      document.getElementById('result-emoji').textContent = bestPet.emoji;
-      document.getElementById('result-pet-name').textContent = `${bestPet.emoji} ${bestPet.name}`;
-      document.getElementById('result-label').textContent = `投资人格：${bestLabel}`;
-      document.getElementById('result-match').textContent = `匹配度：${matchRate}%`;
-      document.getElementById('result-description').innerHTML = `
-        <strong>风格：</strong>${bestPet.style}<br>
-        <strong>口头禅：</strong>${bestPet.catchphrase}<br>
-        <strong>性格：</strong>${bestPet.description.replace('\n', '<br>')}
-      `;
-      
-      // Top 3
-      const top3Container = document.getElementById('top3-container');
-      top3Container.innerHTML = '<h3 style="margin-bottom: 15px; color: #333;">你的 Top 3</h3>';
-      top3.forEach((item, index) => {
-        const pet = PETS_INFO[item[0]];
-        const label = SELF_DEPRECATING_LABELS[item[0]];
-        const match = Math.min(95, 55 + item[1] * 6);
-        top3Container.innerHTML += `
-          <div class="top3-item">
-            <div class="top3-emoji">${pet.emoji}</div>
-            <div class="top3-info">
-              <div class="top3-name">${index + 1}. ${pet.name} - ${label}</div>
-              <div class="top3-label">${pet.style}</div>
-            </div>
-            <div class="top3-match">${match}%</div>
-          </div>
-        `;
-      });
-      
-      // 更新 URL（用于分享）
-      const newUrl = new URL(window.location);
-      newUrl.searchParams.set('result', bestPetId);
-      window.history.pushState({}, '', newUrl);
-      
-      // 保存测试结果到 localStorage
-      saveTestResult(bestPetId, petScores);
-    }
-
-    // 复制技能链接
-    function copySkillLink() {
-      const skillUrl = 'https://clawhub.ai/lj22503/investment-buddy-pet';
-      navigator.clipboard.writeText(skillUrl).then(() => {
-        alert('✅ 已复制技能链接！\n\n请打开 OpenClaw，将链接发给小龙虾以部署 Pet Skill~');
-      }).catch(() => {
-        // 降级方案：手动复制
-        window.open(skillUrl, '_blank');
-      });
-    }
-
-    // 分享结果
-    function shareResult() {
-      const bestPetId = Object.entries(petScores).sort((a, b) => b[1] - a[1])[0][0];
-      const bestPet = PETS_INFO[bestPetId];
-      const bestLabel = SELF_DEPRECATING_LABELS[bestPetId];
-      
-      const shareText = `我的投资人格是「${bestLabel}」，本命宠物是${bestPet.emoji}${bestPet.name}！\n\n测试链接：${window.location.origin}\n\n💡 完成测试还可领取专属宠物技能~`;
-      
-      if (navigator.share) {
-        navigator.share({
-          title: '投资人格测试 - 找到你的本命宠物',
-          text: shareText,
-          url: window.location.href
-        });
-      } else {
-        // 复制到剪贴板
-        navigator.clipboard.writeText(shareText).then(() => {
-          alert('✅ 已复制到剪贴板！\n\n可以分享到朋友圈啦~\n\n分享后记得回来下载技能哦！');
-        });
-      }
-    }
-
-    // 重测
-    function retakeTest() {
-      document.getElementById('result-page').classList.add('hidden');
-      document.getElementById('quiz-page').classList.remove('hidden');
-      init();
-    }
-
-    // 检查 URL 是否有结果参数（直接显示结果）
-    function checkUrlResult() {
-      const params = new URLSearchParams(window.location.search);
-      const result = params.get('result');
-      if (result && PETS_INFO[result]) {
-        // 直接显示结果页（简化处理，实际应加载完整数据）
-        alert('查看分享结果功能开发中...');
-      }
-    }
-
-    // ==================== 用户档案功能 ====================
-    
-    // 用户档案结构
-    let userProfile = {
-      userId: 'user_' + Date.now(),
-      createdAt: new Date().toISOString(),
-      testResults: [],
-      preferences: {
-        riskTolerance: '待设置',
-        investmentHorizon: '待设置',
-        knowledgeLevel: '待设置',
-        decisionStyle: '待设置'
-      },
-      evolutionData: {
-        testCount: 0,
-        styleChanges: [],
-        evolutionScore: 0
-      }
-    };
-
-    // 根据宠物 ID 确定投资风格
-    function determineStyle(petId) {
-      const styleMap = {
-        'songguo': '保守/左侧',
-        'wugui': '保守/左侧',
-        'maotouying': '平衡/右侧',
-        'lang': '激进/右侧',
-        'daxiang': '平衡/左侧',
-        'ying': '激进/右侧',
-        'huli': '平衡/右侧',
-        'haitun': '保守/右侧',
-        'shizi': '激进/右侧',
-        'mayi': '保守/左侧',
-        'luotuo': '激进/左侧',
-        'dunjiaoshou': '激进/右侧',
-        'junma': '激进/右侧'
-      };
-      return styleMap[petId] || '待确定';
-    }
-
-    // 保存测试结果
-    function saveTestResult(petId, scores) {
-      const result = {
-        petId: petId,
-        scores: scores,
-        date: new Date().toISOString(),
-        preferences: {...userProfile.preferences}
-      };
-      userProfile.testResults.push(result);
-      userProfile.evolutionData.testCount++;
-      
-      // 检测风格变化
-      if (userProfile.testResults.length > 1) {
-        const prevStyle = determineStyle(userProfile.testResults[userProfile.testResults.length - 2].petId);
-        const currStyle = determineStyle(petId);
-        if (prevStyle !== currStyle) {
-          userProfile.evolutionData.styleChanges.push({
-            from: prevStyle,
-            to: currStyle,
-            date: new Date().toISOString()
-          });
-        }
-      }
-      
-      // 计算进化分数
-      userProfile.evolutionData.evolutionScore = Math.min(100, 
-        userProfile.evolutionData.testCount * 10 + 
-        userProfile.evolutionData.styleChanges.length * 5
-      );
-      
-      localStorage.setItem('mangofolio-user-profile', JSON.stringify(userProfile));
-    }
-
-    // 加载用户档案
-    function loadUserProfile() {
-      const saved = localStorage.getItem('mangofolio-user-profile');
-      if (saved) {
-        userProfile = JSON.parse(saved);
-      }
-      return userProfile;
-    }
-
-    // 显示用户档案
-    function showUserProfile() {
-      loadUserProfile();
-      const content = document.getElementById('profile-content');
-      const latestResult = userProfile.testResults.length > 0 ? 
-        userProfile.testResults[userProfile.testResults.length - 1] : null;
-      
-      content.innerHTML = `
-        <div class="profile-card">
-          <h3 style="color: #5C4033; margin-bottom: 10px;">📊 测试记录</h3>
-          <p>测试次数：${userProfile.evolutionData.testCount}</p>
-          <p>注册时间：${new Date(userProfile.createdAt).toLocaleDateString('zh-CN')}</p>
-          <p>进化分数：${userProfile.evolutionData.evolutionScore}/100</p>
-        </div>
-        
-        <div class="profile-card">
-          <h3 style="color: #5C4033; margin-bottom: 10px;">🎯 投资偏好</h3>
-          <p>风险承受力：${userProfile.preferences.riskTolerance}</p>
-          <p>投资期限：${userProfile.preferences.investmentHorizon}</p>
-          <p>知识水平：${userProfile.preferences.knowledgeLevel}</p>
-          <p>决策风格：${userProfile.preferences.decisionStyle}</p>
-        </div>
-        
-        ${latestResult ? `
-        <div class="profile-card">
-          <h3 style="color: #5C4033; margin-bottom: 10px;">🐾 最近测试结果</h3>
-          <p>本命宠物：${PETS_INFO[latestResult.petId].emoji} ${PETS_INFO[latestResult.petId].name}</p>
-          <p>投资风格：${determineStyle(latestResult.petId)}</p>
-          <p>测试时间：${new Date(latestResult.date).toLocaleDateString('zh-CN')}</p>
-        </div>
-        ` : '<p style="text-align: center; color: #8B7355;">暂无测试结果，先完成一次测试吧！</p>'}
-      `;
-      
-      document.getElementById('quiz-page').classList.add('hidden');
-      document.getElementById('result-page').classList.add('hidden');
-      document.getElementById('profile-page').classList.remove('hidden');
-    }
-
-    // 显示进化报告
-    function showEvolutionReport() {
-      loadUserProfile();
-      const results = userProfile.testResults;
-      const content = document.getElementById('evolution-content');
-      
-      if (results.length < 2) {
-        content.innerHTML = `
-          <div class="profile-card">
-            <h3 style="color: #5C4033; margin-bottom: 10px;">📊 进化报告</h3>
-            <p>当前测试次数：${results.length}</p>
-            <p style="color: #8B7355;">请至少测试 2 次后再生成进化报告</p>
-            <p style="color: #8B7355;">每次测试都是你投资大脑的一次进化</p>
-          </div>
-        `;
-      } else {
-        const latest = results[results.length - 1];
-        const previous = results[results.length - 2];
-        const styleChange = {
-          previous: determineStyle(previous.petId),
-          current: determineStyle(latest.petId),
-          changed: determineStyle(previous.petId) !== determineStyle(latest.petId)
-        };
-        
-        const growthLevel = userProfile.evolutionData.testCount >= 10 ? 'L3 自进化' : 
-                            userProfile.evolutionData.testCount >= 5 ? 'L2 个性化' : 'L1 标准化';
-        
-        content.innerHTML = `
-          <div class="profile-card">
-            <h3 style="color: #5C4033; margin-bottom: 10px;">📈 投资风格变化</h3>
-            <p>上次风格：${styleChange.previous}</p>
-            <p>本次风格：${styleChange.current}</p>
-            <p>变化状态：${styleChange.changed ? '🔄 已变化' : '✅ 稳定'}</p>
-          </div>
-          
-          <div class="profile-card">
-            <h3 style="color: #5C4033; margin-bottom: 10px;">📜 历史决策对比</h3>
-            ${results.map((r, i) => `
-              <p>${new Date(r.date).toLocaleDateString('zh-CN')} - ${PETS_INFO[r.petId].emoji} ${PETS_INFO[r.petId].name} (${determineStyle(r.petId)})</p>
-            `).join('')}
-          </div>
-          
-          <div class="profile-card">
-            <h3 style="color: #5C4033; margin-bottom: 10px;">🌱 能力成长轨迹</h3>
-            <p>当前等级：${growthLevel}</p>
-            <p>测试次数：${userProfile.evolutionData.testCount}</p>
-            <p>风格变化：${userProfile.evolutionData.styleChanges.length} 次</p>
-            <p>进化分数：${userProfile.evolutionData.evolutionScore}/100</p>
-          </div>
-          
-          <div class="migration-cost">
-            <h3 style="color: #5C4033; margin-bottom: 10px;">⚠️ 迁移成本</h3>
-            <p>你的投资大脑已成型，包含：</p>
-            <ul>
-              <li>${userProfile.evolutionData.testCount} 次交互数据</li>
-              <li>${userProfile.evolutionData.styleChanges.length} 次风格变化</li>
-              <li>${userProfile.evolutionData.evolutionScore} 进化分数</li>
-            </ul>
-            <p><strong>离开等于放弃这些进化成果。</strong></p>
-          </div>
-        `;
-      }
-      
-      document.getElementById('quiz-page').classList.add('hidden');
-      document.getElementById('result-page').classList.add('hidden');
-      document.getElementById('evolution-page').classList.remove('hidden');
-    }
-
-    // 返回测试
-    function goBack() {
-      document.getElementById('profile-page').classList.add('hidden');
-      document.getElementById('evolution-page').classList.add('hidden');
-      document.getElementById('quiz-page').classList.remove('hidden');
-    }
-
-    // ==================== 启动 ====================
-    loadUserProfile();
-    init();
-    checkUrlResult();
-  </script>
-  
-  <!-- 页脚署名 -->
-  <div class="footer">
-    <div class="disclaimer">
-      <p>⚠️ 风险提示</p>
-      <p>本测试结果仅供娱乐参考，不构成任何投资建议。</p>
-      <p>市场有风险，投资需谨慎。请独立判断并自行承担风险。</p>
+<!-- 节点三：4大陪伴包 -->
+<section id="care-packages" class="section section-alt">
+  <div class="container">
+    <div class="text-center" style="margin-bottom: 48px;">
+      <h2 class="h1" style="margin-bottom: 16px;">4种陪伴，对应投资全周期</h2>
+      <p class="body-lg">不是替你做决定，是帮你做更好的决定</p>
     </div>
-    <div class="signature">
-      <p>方法论来源：范蠡商情研判 + 四专家框架 | 版本：v1.0 | 创作者：燃冰</p>
-      <p>Mangofolio = 芒格的价值投资 + 芒果的耐心成长</p>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
+
+      <!-- 陪伴包1 -->
+      <div class="card-care">
+        <div class="care-icon"><span style="font-size:24px;">🎯</span></div>
+        <h3 class="h3" style="margin-bottom:8px;">投前陪伴</h3>
+        <p class="body text-secondary" style="margin-bottom:12px; font-size:15px;">
+          每次想买之前，先问自己三个问题。投资前检查清单，挡住冲动决策。
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:6px;">
+          <span class="badge badge-gold">决策缓冲</span>
+          <span class="badge badge-muted">初筛分析</span>
+        </div>
+      </div>
+
+      <!-- 陪伴包2 -->
+      <div class="card-care">
+        <div class="care-icon"><span style="font-size:24px;">📊</span></div>
+        <h3 class="h3" style="margin-bottom:8px;">投中陪伴</h3>
+        <p class="body text-secondary" style="margin-bottom:12px; font-size:15px;">
+          每天3分钟，知道今天要关注什么。持仓异动第一时间提醒，不是焦虑推送。
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:6px;">
+          <span class="badge badge-gold">每日简报</span>
+          <span class="badge badge-muted">异动提醒</span>
+        </div>
+      </div>
+
+      <!-- 陪伴包3 -->
+      <div class="card-care">
+        <div class="care-icon"><span style="font-size:24px;">🌙</span></div>
+        <h3 class="h3" style="margin-bottom:8px;">投后陪伴</h3>
+        <p class="body text-secondary" style="margin-bottom:12px; font-size:15px;">
+          定期复盘报告——你这次操作，是因为逻辑还是因为情绪？宠物帮你记录行为偏差。
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:6px;">
+          <span class="badge badge-gold">行为记录</span>
+          <span class="badge badge-muted">定期复盘</span>
+        </div>
+      </div>
+
+      <!-- 陪伴包4 -->
+      <div class="card-care">
+        <div class="care-icon"><span style="font-size:24px;">📚</span></div>
+        <h3 class="h3" style="margin-bottom:8px;">体系陪伴</h3>
+        <p class="body text-secondary" style="margin-bottom:12px; font-size:15px;">
+          不是教你背结论，是帮你建立自己的投资框架。需要时召唤18位投资大师。
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:6px;">
+          <span class="badge badge-gold">知识地图</span>
+          <span class="badge badge-muted">大师技能</span>
+        </div>
+      </div>
+
     </div>
   </div>
+</section>
+
+<!-- 节点四：宠物展示 -->
+<section id="pets" class="section" style="background: var(--bg-card);">
+  <div class="container">
+    <div class="text-center" style="margin-bottom: 48px;">
+      <h2 class="h1" style="margin-bottom: 16px;">总有一只，和你一样</h2>
+      <p class="body-lg">不是选"最好的"，是选"最像你的"</p>
+    </div>
+
+    <!-- 阵营标签 -->
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:32px;">
+      <span class="caption" style="color:var(--text-muted);">🐾 保守阵营</span>
+      <span class="caption" style="color:var(--text-muted);">🐺 进攻阵营</span>
+      <span class="caption" style="color:var(--text-muted);">🦉 平衡阵营</span>
+    </div>
+
+    <!-- 宠物网格 -->
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap:16px;">
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🐿️</div>
+        <div style="font-weight:600; margin-bottom:4px;">松果</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">谨慎定投型</div>
+        <div class="badge badge-gold" style="font-size:11px;">口头禅：慢慢来</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🐢</div>
+        <div style="font-weight:600; margin-bottom:4px;">慢慢</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">长期主义型</div>
+        <div class="badge badge-gold" style="font-size:11px;">口头禅：时间奖励耐心</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🐘</div>
+        <div style="font-weight:600; margin-bottom:4px;">稳稳</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">稳健配置型</div>
+        <div class="badge badge-gold" style="font-size:11px;">口头禅：别all in</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🐺</div>
+        <div style="font-weight:600; margin-bottom:4px;">孤狼</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">激进成长型</div>
+        <div class="badge badge-warning" style="font-size:11px;">口头禅：别人恐惧我贪婪</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🦁</div>
+        <div style="font-weight:600; margin-bottom:4px;">狮王</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">集中投资型</div>
+        <div class="badge badge-warning" style="font-size:11px;">口头禅：分散是无知保护</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🐬</div>
+        <div style="font-weight:600; margin-bottom:4px;">泡泡</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">主题投资型</div>
+        <div class="badge badge-warning" style="font-size:11px;">口头禅：风口来了猪都能飞</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🐰</div>
+        <div style="font-weight:600; margin-bottom:4px;">跳跳</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">灵活波段型</div>
+        <div class="badge badge-warning" style="font-size:11px;">口头禅：见好就收</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🦉</div>
+        <div style="font-weight:600; margin-bottom:4px;">智多星</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">理性分析型</div>
+        <div class="badge badge-muted" style="font-size:11px;">口头禅：数据不说谎</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🦎</div>
+        <div style="font-weight:600; margin-bottom:4px;">变色</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">灵活配置型</div>
+        <div class="badge badge-muted" style="font-size:11px;">口头禅：顺势而为</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🦅</div>
+        <div style="font-weight:600; margin-bottom:4px;">翱翔</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">全球配置型</div>
+        <div class="badge badge-muted" style="font-size:11px;">口头禅：别只盯一亩三分地</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🐙</div>
+        <div style="font-weight:600; margin-bottom:4px;">八爪</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">多策略型</div>
+        <div class="badge badge-muted" style="font-size:11px;">口头禅：多条腿走路</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🦄</div>
+        <div style="font-weight:600; margin-bottom:4px;">独角</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">成长投资型</div>
+        <div class="badge badge-warning" style="font-size:11px;">口头禅：我看好长期趋势</div>
+      </div>
+
+      <div class="card-pet">
+        <div style="font-size:52px; margin-bottom:8px;">🐪</div>
+        <div style="font-weight:600; margin-bottom:4px;">驼驼</div>
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">逆向投资型</div>
+        <div class="badge badge-warning" style="font-size:11px;">口头禅：人弃我取</div>
+      </div>
+
+    </div>
+
+    <div class="text-center" style="margin-top: 48px;">
+      <a href="quiz.html" class="btn btn-primary btn-lg">10题找到我的本命宠物 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 节点五：技能生态 + CTA -->
+<section class="section section-alt">
+  <div class="container">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:64px; align-items:center; max-width:960px; margin:0 auto;">
+
+      <!-- 左侧 -->
+      <div>
+        <span class="badge badge-gold" style="margin-bottom:16px;">🐾 Skill 体系</span>
+        <h2 class="h1" style="margin-bottom:20px;">开始你的投资进化</h2>
+        <p class="body-lg" style="margin-bottom:24px;">
+          Invest Buddy Skill 基于你的投资人格测试结果，<br>
+          为你匹配专属宠物，内置4大陪伴包。
+        </p>
+        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:32px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="color:var(--color-success); font-size:20px;">✓</span>
+            <span class="body">数据来自东方财富/腾讯财经免费API</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="color:var(--color-success); font-size:20px;">✓</span>
+            <span class="body">完全合规，不推荐任何具体投资标的</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="color:var(--color-success); font-size:20px;">✓</span>
+            <span class="body">18位投资大师技能，可按需召唤</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="color:var(--color-success); font-size:20px;">✓</span>
+            <span class="body">完全免费，开源透明</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+          <a href="quiz.html" class="btn btn-primary btn-lg">开始测试</a>
+          <a href="knowledge.html" class="btn btn-secondary">了解技能体系 →</a>
+        </div>
+      </div>
+
+      <!-- 右侧：宠物对话框预览 -->
+      <div style="background:var(--bg-card); border:1px solid var(--mango-border); border-radius:20px; padding:32px; box-shadow:var(--shadow-md);">
+        <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:16px;">
+          <div style="font-size:40px; flex-shrink:0;">🐿️</div>
+          <div>
+            <div style="font-size:13px; color:var(--text-muted); margin-bottom:4px;">松果 · 每日 08:30</div>
+            <div class="bubble">早上好！今天也是存坚果的一天 ☀️<br><br>📊 今日简报：<br>• 沪深300 +0.5%<br>• 你的持仓 +0.8%<br>• 定投日！记得打卡哦 🌰</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <div style="font-size:40px; flex-shrink:0;">🐿️</div>
+          <div>
+            <div style="font-size:13px; color:var(--text-muted); margin-bottom:4px;">松果 · 刚刚</div>
+            <div class="bubble" style="border-bottom-left-radius:6px;">跌了3.2%... 我知道你有点担心。<br><br>但历史上沪深300跌幅>3%有287次，91.6%在3个月内涨回来了。<br><br>你愿意看看历史数据吗 📈</div>
+          </div>
+        </div>
+        <div style="margin-top:16px; padding-top:16px; border-top:1px solid var(--mango-border);">
+          <div style="display:flex; gap:8px;">
+            <input type="text" placeholder="回复松果..." class="input" style="flex:1; font-size:14px;">
+            <button class="btn btn-primary btn-sm">发送</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-logo">
+      <span>🐾</span>
+      <span>Invest Buddy · Mangofolio </span>
+    </div>
+    <p style="font-size:14px; max-width:480px; line-height:1.7; opacity:0.8;">
+      不是理财师，不是机器人。是一只懂你的宠物，陪你走过市场起伏。
+    </p>
+    <div class="footer-links">
+      <a href="/">首页</a>
+      <a href="quiz.html">投资人格测试</a>
+      <a href="knowledge.html">技能体系</a>
+      <a href="https://github.com/lj22503/investment-buddy-pet" target="_blank">GitHub</a>
+    </div>
+    <hr class="footer-divider">
+    <p class="disclaimer">
+      投资有风险，入市需谨慎。<br>
+      本页面内容仅供投资者教育参考，不构成任何投资建议。<br>
+      本产品不推荐任何具体投资标的。
+    </p>
+  </div>
+</footer>
+
 </body>
 </html>
