@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<script>
+window.trackEvent = function(name, data) {
+  // Cloudflare Web Analytics 自定义事件
+  console.log('[Track]', name, data);
+};
+</script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>投资人格测试 — 找到你的本命宠物 | Invest Buddy</title>
