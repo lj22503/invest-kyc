@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- Umami Analytics -->
-<script async defer data-website-id="mangofolio-buddy" src="https://umami.mangofolio.com/script.js"></script>
+<!-- Cloudflare Web Analytics -->
+<script src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "YOUR_CF_TOKEN"}' defer></script>
 <script>
 window.trackEvent = function(name, data) {
-  if (window.umami) window.umami.track(name, data);
+  // Cloudflare Web Analytics 自定义事件
   console.log('[Track]', name, data);
+  // 可通过 Cloudflare Workers 转发到自定义分析服务
 };
 </script>
 
