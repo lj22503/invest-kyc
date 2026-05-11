@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<!-- Umami Analytics -->
+<script async defer data-website-id="mangofolio-buddy" src="https://umami.mangofolio.com/script.js"></script>
+<script>
+window.trackEvent = function(name, data) {
+  if (window.umami) window.umami.track(name, data);
+  console.log('[Track]', name, data);
+};
+</script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invest Buddy — 投资界的 MBTI，找到你的本命宠物</title>
@@ -378,6 +387,17 @@
   </div>
 </section>
 
+
+<div id="clawhub-guide" style="margin-top:32px; padding:24px; background:linear-gradient(135deg, #FFF8F0, #F5E6D3); border-radius:12px; border-left:4px solid #B8860B; text-align:center;">
+  <h3 style="margin-bottom:12px; color:#5C4033;">🐾 安装投资宠物到你的 AI 助手</h3>
+  <p style="font-size:14px; color:#8B7355; margin-bottom:16px;">一键获取完整 AI 交互能力：12 守护兽 + 18 位大师 + 行为矫正</p>
+  <div style="display:inline-flex; align-items:center; gap:8px; background:white; padding:12px 16px; border-radius:8px; border:1px solid #E8D5B5; margin-bottom:12px;">
+    <code style="font-size:13px; color:#5C4033; user-select:all;">clawhub install investment-buddy-pet</code>
+    <button onclick="copyClawhubCmd()" style="padding:6px 12px; background:#B8860B; color:white; border:none; border-radius:6px; cursor:pointer; font-size:12px;">复制</button>
+  </div>
+  <p style="font-size:12px; color:#A08060;">适用于 OpenClaw / Claude / 本地 Agent 环境</p>
+</div>
+
 <!-- 页脚 -->
 <footer class="site-footer">
   <div class="container">
@@ -402,6 +422,40 @@
     </p>
   </div>
 </footer>
+
+
+<script>
+function shareToWechat() {
+  window.trackEvent('share_click', {method: 'wechat'});
+  const text = '🐿️ 我的投资人格是「松果」——谨慎定投型。12只投资宠物，3分钟找到你的本命宠物。';
+  if (navigator.share) {
+    navigator.share({title: '投资人格测试', text: text, url: window.location.href}).catch(()=>{});
+  } else {
+    copyShareLink();
+  }
+}
+function copyShareLink() {
+  window.trackEvent('share_click', {method: 'copy'});
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const t = document.getElementById('copy-toast');
+    if(t) { t.style.opacity = 1; setTimeout(()=>t.style.opacity=0, 2000); }
+  });
+}
+function copyClawhubCmd() {
+  window.trackEvent('clawhub_copy');
+  navigator.clipboard.writeText('clawhub install investment-buddy-pet').then(() => {
+    alert('✅ 已复制安装命令，粘贴到终端即可');
+  });
+}
+// 测试完成埋点
+const origShowResult = window.showResult;
+if(origShowResult) {
+  window.showResult = function() {
+    window.trackEvent('quiz_complete');
+    origShowResult.apply(this, arguments);
+  };
+}
+</script>
 
 </body>
 </html>
