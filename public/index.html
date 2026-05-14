@@ -636,7 +636,6 @@
     </div>
   </div>
   
-  <script src="https://cdn.authing.co/guard/5.2.0/guard.min.js"></script>
   <script>
     // 测试题目数据
     const QUESTIONS = [
@@ -932,52 +931,29 @@
     
     // ========== Authing 登录功能 ==========
     
-    // Authing 配置
+    // Authing 配置（直接使用 OAuth 2.0 授权码流程）
     const AUTHING_CONFIG = {
       appId: '6a02afb2b8ac3f956f32e8d4',
-      protocol: 'oidc',
-      isSSO: false
+      authUrl: 'https://wsic8m4uccb7-demo.authing.cn/authorize',
+      redirectUri: window.location.origin + '/auth/callback'
     };
     
-    let guard = null;
-    let isAuthingInitialized = false;
-    
-    // 初始化 Authing Guard
-    function initGuard() {
-      if (isAuthingInitialized) return;
-      
-      if (typeof GuardFactory === 'undefined') {
-        console.error('[Mangofolio] Authing Guard 未加载');
-        return;
-      }
-      
-      try {
-        guard = new GuardFactory(AUTHING_CONFIG);
-        guard.init();
-        isAuthingInitialized = true;
-        console.log('[Mangofolio] Authing Guard 初始化成功');
-      } catch (e) {
-        console.error('[Mangofolio] Authing Guard 初始化失败', e);
-      }
-    }
-    
-    // 登录函数
+    // 登录函数（直接使用 OAuth 2.0 授权码流程）
     function loginWithAuthing() {
-      initGuard();
+      const state = Math.random().toString(36).substring(2);
+      const params = new URLSearchParams({
+        client_id: AUTHING_CONFIG.appId,
+        redirect_uri: AUTHING_CONFIG.redirectUri,
+        response_type: 'code',
+        scope: 'openid profile email phone',
+        state: state
+      });
       
-      if (!guard) {
-        alert('Authing 未初始化，请稍后再试');
-        return;
-      }
+      // 保存 state 用于验证
+      localStorage.setItem('authing_state', state);
       
-      try {
-        guard.startWithRedirect({
-          redirectUri: window.location.origin + '/auth/callback'
-        });
-      } catch (e) {
-        console.error('[Mangofolio] 登录失败', e);
-        alert('登录失败：' + e.message);
-      }
+      // 跳转到 Authing 登录页
+      window.location.href = AUTHING_CONFIG.authUrl + '?' + params.toString();
     }
     
     // 保存守护兽（登录）
