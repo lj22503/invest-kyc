@@ -934,7 +934,9 @@
     // Authing 配置（直接使用 OAuth 2.0 授权码流程）
     const AUTHING_CONFIG = {
       appId: '6a02afb2b8ac3f956f32e8d4',
-      authUrl: 'https://wsic8m4uccb7-demo.authing.cn/authorize',
+      authUrl: 'https://authing.cn/oauth/authorize',
+      tokenUrl: 'https://authing.cn/oidc/token',
+      userInfoUrl: 'https://authing.cn/oidc/me',
       redirectUri: window.location.origin + '/auth/callback'
     };
     
