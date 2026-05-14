@@ -5,8 +5,8 @@ export async function onRequest(context) {
   const { request, env } = context;
   const url = new URL(request.url);
   
-  // 后端服务器地址（使用服务器 IP）
-  const API_BASE = 'http://124.223.184.137:8003';
+  // 后端服务器地址（使用 Cloudflare Tunnel 临时 URL）
+  const API_BASE = 'https://tray-transportation-threshold-workplace.trycloudflare.com';
   
   // 构建目标 URL
   const targetUrl = `${API_BASE}${url.pathname}${url.search}`;
