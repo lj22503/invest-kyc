@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录中... | Mangofolio</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #F5E6D3 0%, #E8D5B5 50%, #D4C4A8 100%);
+      font-family: "Noto Serif SC", "Songti SC", serif;
+    }
+    .container {
+      text-align: center;
+      padding: 40px;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      margin: 20px auto;
+      border: 4px solid #B8860B;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .message {
+      color: #5C4033;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    .error {
+      color: #8b0000;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="spinner"></div>
+    <p class="message">正在登录...</p>
+    <p class="error" id="error" style="display: none;"></p>
+  </div>
+
+  <script>
+    const API_BASE = window.location.hostname === 'localhost' 
+      ? 'http://localhost:8002/api'
+      : 'https://buddy.mangofolio.com/api';
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+
+    if (!code) {
+      document.getElementById('error').textContent = '登录失败：缺少授权码';
+      document.getElementById('error').style.display = 'block';
+      document.querySelector('.spinner').style.display = 'none';
+      document.querySelector('.message').textContent = '请返回重试';
+      
+      setTimeout(() => {
+        window.location.href = '/quiz';
+      }, 3000);
+    } else {
+      fetch(API_BASE + '/auth/callback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: code })
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.status === 'success') {
+          // 保存用户信息
+          localStorage.setItem('mangofolio_user_id', data.user_id);
+          localStorage.setItem('mangofolio_authing_openid', data.openid);
+          
+          // 重定向到结果页
+          window.location.href = '/quiz?auth=success';
+        } else {
+          throw new Error(data.message || '登录失败');
+        }
+      })
+      .catch(e => {
+        document.getElementById('error').textContent = '登录失败：' + e.message;
+        document.getElementById('error').style.display = 'block';
+        document.querySelector('.spinner').style.display = 'none';
+        document.querySelector('.message').textContent = '请返回重试';
+        
+        setTimeout(() => {
+          window.location.href = '/quiz';
+        }, 3000);
+      });
+    }
+  </script>
+</body>
+</html>
