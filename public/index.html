@@ -3,18 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>投资人格测试 - 找到你的本命宠物</title>
-  <meta name="description" content="10 道趣味测试题，找到你的投资本命宠物，获得专属投资人格标签">
-  <meta name="keywords" content="投资测试，人格测试，宠物，MBTI，SSBTI，基金，股票">
+  <title>Mangofolio 投资人格测试 - 种得对，等得久</title>
+  <meta name="description" content="Mangofolio AI 投资助手 - 10 道趣味测试题，找到你的投资本命宠物，获得专属投资人格标签">
+  <meta name="keywords" content="Mangofolio, AI 投资助手，投资测试，人格测试，种得对等得久，芒格，芒果">
   
   <!-- Open Graph / 微信分享 -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="投资人格测试 - 找到你的本命宠物">
-  <meta property="og:description" content="我的投资人格是「数据狂魔」，你的呢？快来测试！">
-  <meta property="og:image" content="https://mangofolio.vercel.app/static/share-card.png">
+  <meta property="og:title" content="Mangofolio 投资人格测试 - 种得对，等得久">
+  <meta property="og:description" content="我的投资人格是「数据狂魔」，你的呢？Mangofolio = 芒格的价值投资 + 芒果的耐心成长">
+  <meta property="og:image" content="https://kyc.mangofolio.com/static/share-card.png">
   
-  <!-- Authing Guard -->
-  <link href="https://cdn.authing.co/guard/5.2.0/guard.min.css" rel="stylesheet">
+  <!-- JSON-LD 元数据 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Mangofolio 投资人格测试",
+    "description": "10 道趣味测试题，找到你的投资本命宠物",
+    "url": "https://kyc.mangofolio.com",
+    "author": {
+      "@type": "Person",
+      "name": "燃冰",
+      "url": "https://mangofolio.com"
+    },
+    "provider": {
+      "@type": "Organization",
+      "name": "Mangofolio",
+      "url": "https://mangofolio.com"
+    },
+    "version": "v1.0",
+    "methodology": "范蠡商情研判 + 四专家框架",
+    "license": "CC BY-NC-SA 4.0",
+    "slogan": "种得对，等得久"
+  }
+  </script>
   
   <style>
     * {
@@ -35,6 +57,47 @@
     .container {
       max-width: 600px;
       margin: 0 auto;
+    }
+    
+    .brand-bar {
+      text-align: center;
+      padding: 10px 0;
+      font-size: 12px;
+      color: #8B7355;
+      letter-spacing: 1px;
+    }
+    
+    .brand-bar .slogan {
+      margin-left: 15px;
+      color: #B8860B;
+      font-weight: 600;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 30px;
+      border-top: 2px solid #E8D5B5;
+    }
+    
+    .disclaimer {
+      background: linear-gradient(135deg, #FFF8F0, #F5E6D3);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border-left: 5px solid #B8860B;
+    }
+    
+    .disclaimer p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #5C4033;
+    }
+    
+    .signature {
+      font-size: 12px;
+      color: #8B7355;
+      line-height: 1.8;
     }
     
     .header {
@@ -463,10 +526,15 @@
 </head>
 <body>
   <div class="container">
+    <!-- 品牌标识 -->
+    <div class="brand-bar">
+      <span>Powered by Mangofolio</span>
+      <span class="slogan">种得对，等得久</span>
+    </div>
     <!-- 头部 -->
     <div class="header">
       <h1>🐾 投资人格测试</h1>
-      <p>10 道题，找到你的本命宠物</p>
+      <p>10 道题，找到你的本命宠物 · Mangofolio = 芒格的价值投资 + 芒果的耐心成长</p>
     </div>
     
     <!-- 测试页面 -->
@@ -501,7 +569,6 @@
       
       <div style="margin-top: 30px;">
         <button class="btn btn-primary" onclick="shareResult()">分享我的结果</button>
-        <button id="btn-save-pet" class="btn btn-secondary" onclick="handleSavePet()" style="margin-top: 10px;">💾 保存守护兽（换设备也能看）</button>
         <button class="btn btn-secondary" onclick="retakeTest()" style="margin-top: 10px;">再测一次</button>
       </div>
       
@@ -516,19 +583,6 @@
           测试内容：基于投资心理学和行为金融学设计，仅供学习参考。<br>
           宠物功能：提供情感陪伴、定投提醒、知识普及，<strong>不推荐具体产品</strong>。<br><br>
           ⚠️ 市场有风险，投资需谨慎。请独立判断并自行承担风险。
-        </div>
-      </div>
-      
-      <!-- 合规提示 -->
-      <div class="viral-card warning" style="margin-top: 15px;">
-        <div class="viral-text">
-          <span class="viral-emoji">🔒</span>
-          <strong>合规承诺：</strong><br>
-          • 本技能不推荐具体基金/股票<br>
-          • 不承诺收益或保证赚钱<br>
-          • 不提供市场择时建议<br>
-          • 用户数据本地存储，不上传云端<br>
-          • 所有数据仅供参考，可能存在延迟
         </div>
       </div>
       
@@ -550,48 +604,32 @@
             <br>• 📊 投资技能 - 指数估值、行业监测、持仓诊断
             <br>• 🌱 成长养成 - 宠物升级、技能解锁
           </div>
+          
+          <!-- 合规承诺（移到技能模块内） -->
+          <div class="viral-card warning" style="margin-top: 15px;">
+            <div class="viral-text">
+              <span class="viral-emoji">🔒</span>
+              <strong>合规承诺：</strong><br>
+              • 本技能不推荐具体基金/股票<br>
+              • 不承诺收益或保证赚钱<br>
+              • 不提供市场择时建议<br>
+              • 用户数据本地存储，不上传云端<br>
+              • 所有数据仅供参考，可能存在延迟
+            </div>
+          </div>
+          
+          <!-- 安装指引 -->
+          <div class="viral-text" style="margin-top: 15px;">
+            <strong>📋 安装指引：</strong><br>
+            复制下方提示词，发给 <strong>小龙虾</strong> 以部署 Pet Skill
+          </div>
+          
           <div class="viral-action">
-            <a href="https://github.com/lj22503/investment-buddy-pet" target="_blank" class="viral-btn viral-btn-primary">
-              📥 一键安装技能
-            </a>
+            <button onclick="copySkillLink()" class="viral-btn viral-btn-primary">
+              📋 一键复制
+            </button>
             <a href="https://github.com/lj22503/investment-buddy-pet/blob/main/README.md" target="_blank" class="viral-btn viral-btn-secondary">
               📖 查看文档
-            </a>
-          </div>
-        </div>
-      </div>
-      
-      <!-- 微信群引导 -->
-      <div class="viral-section">
-        <div class="viral-title">
-          💬 加入投资交流社群
-        </div>
-        
-        <div class="viral-card">
-          <div class="viral-text">
-            <span class="viral-emoji">👥</span>
-            欢迎加入 <strong>投资宠物交流群</strong>，和志同道合的投资者一起学习、交流、成长！
-          </div>
-          <div class="viral-text">
-            <strong>群内福利：</strong>
-            <br>• 每日市场扫描 + 行业跟踪
-            <br>• 投资框架分享 + 案例解析
-            <br>• 技能使用指导 + 问题解答
-            <br>• 不定期直播 + 专属福利
-          </div>
-          
-          <!-- 微信群二维码 -->
-          <div class="qr-code">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=wechat_group_qr_code" alt="微信群二维码">
-            <div class="qr-code-text">扫码加入投资宠物交流群</div>
-          </div>
-          
-          <div class="viral-action">
-            <a href="#" class="viral-btn viral-btn-wechat" onclick="alert('请保存二维码，微信扫码添加~')">
-              💚 扫码进群
-            </a>
-            <a href="#" class="viral-btn viral-btn-secondary" onclick="alert('群满请加管理员微信：mangofolio_admin')">
-              👨‍💼 联系管理员
             </a>
           </div>
         </div>
@@ -886,13 +924,24 @@
       window.history.pushState({}, '', newUrl);
     }
 
+    // 复制技能链接
+    function copySkillLink() {
+      const skillUrl = 'https://clawhub.ai/lj22503/investment-buddy-pet';
+      navigator.clipboard.writeText(skillUrl).then(() => {
+        alert('✅ 已复制技能链接！\n\n请打开 OpenClaw，将链接发给小龙虾以部署 Pet Skill~');
+      }).catch(() => {
+        // 降级方案：手动复制
+        window.open(skillUrl, '_blank');
+      });
+    }
+
     // 分享结果
     function shareResult() {
       const bestPetId = Object.entries(petScores).sort((a, b) => b[1] - a[1])[0][0];
       const bestPet = PETS_INFO[bestPetId];
       const bestLabel = SELF_DEPRECATING_LABELS[bestPetId];
       
-      const shareText = `我的投资人格是「${bestLabel}」，本命宠物是${bestPet.emoji}${bestPet.name}！\n\n测试链接：${window.location.origin}\n\n💡 完成测试还可领取专属宠物技能，加入投资交流群~`;
+      const shareText = `我的投资人格是「${bestLabel}」，本命宠物是${bestPet.emoji}${bestPet.name}！\n\n测试链接：${window.location.origin}\n\n💡 完成测试还可领取专属宠物技能~`;
       
       if (navigator.share) {
         navigator.share({
@@ -928,113 +977,19 @@
     // 启动
     init();
     checkUrlResult();
-    
-    // ========== Authing 登录功能 ==========
-    
-    // Authing 配置（直接使用 OAuth 2.0 授权码流程）
-    const AUTHING_CONFIG = {
-      appId: '6a02afb2b8ac3f956f32e8d4',
-      authUrl: 'https://wsic8m4uccb7-demo.authing.cn/oidc/auth',
-      tokenUrl: 'https://wsic8m4uccb7-demo.authing.cn/oidc/token',
-      userInfoUrl: 'https://wsic8m4uccb7-demo.authing.cn/oidc/me',
-      redirectUri: window.location.origin + '/auth/callback'
-    };
-    
-    // 登录函数（直接使用 OAuth 2.0 授权码流程）
-    function loginWithAuthing() {
-      const state = Math.random().toString(36).substring(2);
-      const params = new URLSearchParams({
-        client_id: AUTHING_CONFIG.appId,
-        redirect_uri: AUTHING_CONFIG.redirectUri,
-        response_type: 'code',
-        scope: 'openid profile email phone',
-        state: state
-      });
-      
-      // 保存 state 用于验证
-      localStorage.setItem('authing_state', state);
-      
-      // 跳转到 Authing 登录页
-      window.location.href = AUTHING_CONFIG.authUrl + '?' + params.toString();
-    }
-    
-    // 保存守护兽（登录）
-    function handleSavePet() {
-      // 检查是否已登录
-      const userId = localStorage.getItem('mangofolio_user_id');
-      if (userId) {
-        alert('🎉 已登录！\n\n换设备访问 buddy.mangofolio.com/quiz\n使用同一账号即可查看报告');
-        
-        // 更新按钮状态
-        const saveBtn = document.getElementById('btn-save-pet');
-        if (saveBtn) {
-          saveBtn.textContent = '✅ 已保存';
-          saveBtn.disabled = true;
-        }
-        return;
-      }
-      
-      // 未登录，触发登录
-      loginWithAuthing();
-    }
-    
-    // 处理 Authing 回调
-    async function handleAuthCallback() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const code = urlParams.get('code');
-      
-      if (!code) {
-        console.error('[Mangofolio] 回调地址缺少 code 参数');
-        return;
-      }
-      
-      const API_BASE = window.location.hostname === 'localhost' 
-        ? 'http://localhost:8002/api'
-        : 'https://buddy.mangofolio.com/api';
-      
-      try {
-        const response = await fetch(API_BASE + '/auth/callback', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code: code })
-        });
-        
-        const data = await response.json();
-        
-        if (data.status === 'success') {
-          // 保存用户信息
-          localStorage.setItem('mangofolio_user_id', data.user_id);
-          localStorage.setItem('mangofolio_authing_openid', data.openid);
-          
-          console.log('[Mangofolio] 登录成功', data);
-          
-          // 重定向到 quiz 页面
-          window.location.href = '/quiz?auth=success';
-        } else {
-          throw new Error(data.message || '登录失败');
-        }
-      } catch (e) {
-        console.error('[Mangofolio] 登录回调处理失败', e);
-        alert('登录失败：' + e.message);
-        window.location.href = '/quiz';
-      }
-    }
-    
-    // 检查是否是 Authing 回调
-    if (window.location.pathname === '/auth/callback') {
-      handleAuthCallback();
-    } else {
-      // 检查登录状态
-      const userId = localStorage.getItem('mangofolio_user_id');
-      if (userId) {
-        console.log('[Mangofolio] 用户已登录', userId);
-        const saveBtn = document.getElementById('btn-save-pet');
-        if (saveBtn) {
-          saveBtn.textContent = '✅ 已保存';
-          saveBtn.disabled = true;
-        }
-      }
-    }
   </script>
+  
+  <!-- 页脚署名 -->
+  <div class="footer">
+    <div class="disclaimer">
+      <p>⚠️ 风险提示</p>
+      <p>本测试结果仅供娱乐参考，不构成任何投资建议。</p>
+      <p>市场有风险，投资需谨慎。请独立判断并自行承担风险。</p>
+    </div>
+    <div class="signature">
+      <p>方法论来源：范蠡商情研判 + 四专家框架 | 版本：v1.0 | 创作者：燃冰</p>
+      <p>Mangofolio = 芒格的价值投资 + 芒果的耐心成长</p>
+    </div>
+  </div>
 </body>
 </html>
